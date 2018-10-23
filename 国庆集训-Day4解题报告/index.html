@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.4.2" rel="stylesheet" type="text/css">
+
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.2">
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.4.2',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="题目链接戳我n(≧▽≦)n">
+<meta name="keywords" content="题解,2018国庆集训,前缀和,Dijkstra,欧拉函数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[国庆集训]Day4解题报告">
+<meta property="og:url" content="http://alkri.github.com/国庆集训-Day4解题报告/index.html">
+<meta property="og:site_name" content="Alkri&#39;s Blog">
+<meta property="og:description" content="题目链接戳我n(≧▽≦)n">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-23T05:56:20.049Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[国庆集训]Day4解题报告">
+<meta name="twitter:description" content="题目链接戳我n(≧▽≦)n">
+
+
+
+
+
+
+  <link rel="canonical" href="http://alkri.github.com/国庆集训-Day4解题报告/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>[国庆集训]Day4解题报告 | Alkri's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Alkri's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">31</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">12</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://alkri.github.com/国庆集训-Day4解题报告/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alkri">
+      <meta itemprop="description" content="QQ:1297977829">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alkri's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[国庆集训]Day4解题报告
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-10-23 13:48:00 / 修改时间：13:56:20" itemprop="dateCreated datePublished" datetime="2018-10-23T13:48:00+08:00">2018-10-23</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="题目链接"><a href="#题目链接" class="headerlink" title="题目链接"></a>题目链接</h3><p><a href="/downloads/2018国庆Day4.pdf">戳我n(≧▽≦)n</a></p>
+<a id="more"></a>
+<h3 id="T1"><a href="#T1" class="headerlink" title="T1"></a>T1</h3><p><del>今天我又在划水了</del>，嗯，<del>题解也水一下吧</del>。</p>
+<p>这题考场上我想出正解了。。。<del>可是打挂了（就当我A了）</del></p>
+<p>这题其实并不难，我们只需要维护一个前缀和，再维护从前往后的前缀和最小值，和从后往前的前缀和最小值即可。</p>
+<p>具体看代码吧。（<del>今天不在状态，不想写</del>）</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Re register int</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> N,A[<span class="number">1000005</span>],Sum[<span class="number">1000005</span>],ps[<span class="number">1000005</span>],qs[<span class="number">1000005</span>],ans;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">read</span><span class="params">(T &amp;var)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	T x=<span class="number">0</span>; <span class="keyword">int</span> w=<span class="number">0</span>; <span class="keyword">char</span> ch=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span> (!<span class="built_in">isdigit</span>(ch)) w|=ch==<span class="string">'-'</span>,ch=getchar();</span><br><span class="line">	<span class="keyword">while</span> (<span class="built_in">isdigit</span>(ch)) x=(x&lt;&lt;<span class="number">1</span>)+(x&lt;&lt;<span class="number">3</span>)+(ch^<span class="number">48</span>),ch=getchar();</span><br><span class="line">	var=w?-x:x;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">min</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span> </span>&#123;<span class="keyword">return</span> a&lt;b?a:b;&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	read(N); ps[<span class="number">0</span>]=qs[N+<span class="number">1</span>]=<span class="number">0x3FFFFFFF</span>;</span><br><span class="line">	<span class="keyword">for</span> (Re i=<span class="number">1</span>; i&lt;=N; ++i)</span><br><span class="line">	&#123;</span><br><span class="line">		read(A[i]); Sum[i]=Sum[i<span class="number">-1</span>]+A[i];</span><br><span class="line">		ps[i]=min(ps[i<span class="number">-1</span>],Sum[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (Re i=N; i&gt;=<span class="number">1</span>; --i) qs[i]=min(Sum[i],qs[i+<span class="number">1</span>]);</span><br><span class="line">	<span class="keyword">for</span> (Re i=<span class="number">1</span>; i&lt;=N; ++i)</span><br><span class="line">		<span class="keyword">if</span> (ps[i<span class="number">-1</span>]+Sum[N]-Sum[i<span class="number">-1</span>]&gt;=<span class="number">0</span>&amp;&amp;qs[i]-Sum[i<span class="number">-1</span>]&gt;=<span class="number">0</span>) ++ans;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,ans); <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="T2"><a href="#T2" class="headerlink" title="T2"></a>T2</h3><p>这题实际上并不难，我们先考虑不加入这条<strong>神奇的边</strong>。然后跑最短路。</p>
+<p>然后分情况讨论</p>
+<p>从1到N的最短路有这几种情况：</p>
+<ol>
+<li>直接从1到N，不经过$u,v$</li>
+<li>路径为：$1−&gt;u−&gt;v−&gt;N$</li>
+<li>路径为：$1−&gt;v−&gt;u−&gt;N$</li>
+</ol>
+<p>然后每次考虑选择这三种情况中最小的即可。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Re register int</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> pa pair<span class="meta-string">&lt;long long,int&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> mp make_pair</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Edge</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> to,next,w;</span><br><span class="line">&#125;e[<span class="number">1000005</span>];</span><br><span class="line">priority_queue &lt;pa,<span class="built_in">vector</span>&lt; pa &gt;,greater&lt;pa&gt; &gt; q;</span><br><span class="line"><span class="keyword">int</span> N,M,K,cnt,head[<span class="number">200005</span>],vis[<span class="number">200005</span>];</span><br><span class="line"><span class="keyword">long</span> <span class="keyword">long</span> dis[<span class="number">200005</span>],len1,len2,ans;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">read</span><span class="params">(T &amp;var)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	T x=<span class="number">0</span>; <span class="keyword">int</span> w=<span class="number">0</span>; <span class="keyword">char</span> ch=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span> (!<span class="built_in">isdigit</span>(ch)) w|=ch==<span class="string">'-'</span>,ch=getchar();</span><br><span class="line">	<span class="keyword">while</span> (<span class="built_in">isdigit</span>(ch)) x=(x&lt;&lt;<span class="number">1</span>)+(x&lt;&lt;<span class="number">3</span>)+(ch^<span class="number">48</span>),ch=getchar();</span><br><span class="line">	var=w?-x:x;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">AddEdge</span><span class="params">(<span class="keyword">int</span> u,<span class="keyword">int</span> v,<span class="keyword">int</span> w)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	e[++cnt]=(Edge)&#123;v,head[u],w&#125;; head[u]=cnt;</span><br><span class="line">	e[++cnt]=(Edge)&#123;u,head[v],w&#125;; head[v]=cnt;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">Dijkstra</span><span class="params">(<span class="keyword">int</span> S)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (Re i=<span class="number">1</span>; i&lt;=N; ++i) dis[i]=<span class="number">4e18</span>;</span><br><span class="line">	dis[S]=<span class="number">0</span>; q.push(mp(<span class="number">0</span>,S)); <span class="built_in">memset</span>(vis,<span class="number">0</span>,<span class="keyword">sizeof</span>(vis));</span><br><span class="line">	<span class="keyword">while</span> (!q.empty())</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> now=q.top().second; q.pop();</span><br><span class="line">		<span class="keyword">if</span> (vis[now]) <span class="keyword">continue</span>; vis[now]=<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">for</span> (Re i=head[now];i;i=e[i].next)</span><br><span class="line">			<span class="keyword">if</span> (dis[e[i].to]&gt;dis[now]+e[i].w)</span><br><span class="line">			&#123;</span><br><span class="line">				dis[e[i].to]=dis[now]+e[i].w;</span><br><span class="line">				q.push(mp(dis[e[i].to],e[i].to));</span><br><span class="line">			&#125;</span><br><span class="line">	&#125; <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	read(N),read(M),read(K); <span class="keyword">int</span> u,v,w;</span><br><span class="line">	<span class="keyword">for</span> (Re i=<span class="number">1</span>; i&lt;=M<span class="number">-1</span>; ++i)</span><br><span class="line">		read(u),read(v),read(w),AddEdge(u,v,w);</span><br><span class="line">	Dijkstra(<span class="number">1</span>); read(u),read(v); len1=dis[N];</span><br><span class="line">	AddEdge(u,v,<span class="number">0</span>); Dijkstra(u); len2=dis[<span class="number">1</span>]+dis[N];</span><br><span class="line">	<span class="keyword">for</span> (Re i=<span class="number">1</span>,k; i&lt;=K; ++i)</span><br><span class="line">	&#123;</span><br><span class="line">		read(k); ans=<span class="keyword">int</span>(<span class="number">4e18</span>); ans=min(len1,len2+k);</span><br><span class="line">		ans&gt;=<span class="number">1e18</span>?<span class="built_in">printf</span>(<span class="string">"+Inf\n"</span>):<span class="built_in">printf</span>(<span class="string">"%lld\n"</span>,ans);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="T3"><a href="#T3" class="headerlink" title="T3"></a>T3</h3><p>这算是Day4的比较简单的题目了（个人观点）。但是OJOJ上还是把这题难度硬生生标成<code>Mid</code></p>
+<p>然后其他两题难度都是<code>Low</code>，莫非是我太菜了？？？（黑人问号.jpg）</p>
+<p>我们来观察一下这个神奇的函数$\sum_{d|n}\varphi(d)=n$</p>
+<p>可能一开始你无法发现出什么规律，但是做题嘛，手算肯定要先算出来啊。</p>
+<p>于是我们开始手算</p>
+<p>当$n=1$时，$n=f(1)=1$，所以我们得到$f(1)=1$</p>
+<p>当$n=2$时，$n=f(1)+f(2)=2$，所以$f(2)=1$</p>
+<p>当$n=3$时，$n=f(1)+f(3)=3$，所以$f(3)=2$</p>
+<p>当$n=4$时，$n=f(1)+f(2)+f(4)=4$，所以$f(4)=2$</p>
+<p>…</p>
+<p>然后你们慢慢算吧。。。最后发现，实际上这就是欧拉函数的值。</p>
+<p>而关于公式$\sum_{d|n}\varphi(d)=n$实际上是欧拉函数的一个性质（想要证明的同学请自行百度<del>反正我是找规律</del>）</p>
+<p>然后我们只需要一个线性筛欧拉函数模板就可以过了。（<del>话说我昨晚才刚整理了笔记啊喂</del>）</p>
+<p>但是</p>
+<p>你会发现有几个数据是真的狗</p>
+<p>第$3,8,9$个数据点就要你特判才能过去的。</p>
+<p>这里我就不做解释了，引用一下官方题解的解释</p>
+<blockquote>
+<p>线性筛可以得到70分<br>特判全是7的点可得10分<br>$n=5$的提答点可以通过$\sqrt N$的暴力预处理好<br>剩下一个点，三个数都是质数<br>然而我的代码跑了一个下午没有分解完</p>
+</blockquote>
+<p>（<del>你自己代码跑了一下午都没分解完，那我真是太阳了</del>）</p>
+<p>下面放代码↓</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LL long long</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Re register int</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX_X 10000000</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">bool</span> isPrime[<span class="number">10000005</span>];</span><br><span class="line"><span class="keyword">int</span> N,A[<span class="number">10000005</span>],Prime[<span class="number">10000005</span>],phi[<span class="number">10000005</span>];</span><br><span class="line"><span class="keyword">long</span> <span class="keyword">long</span> ans;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">read</span><span class="params">(T &amp;var)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	T x=<span class="number">0</span>; <span class="keyword">int</span> w=<span class="number">0</span>; <span class="keyword">char</span> ch=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span> (!<span class="built_in">isdigit</span>(ch)) w|=ch==<span class="string">'-'</span>,ch=getchar();</span><br><span class="line">	<span class="keyword">while</span> (<span class="built_in">isdigit</span>(ch)) x=(x&lt;&lt;<span class="number">1</span>)+(x&lt;&lt;<span class="number">3</span>)+(ch^<span class="number">48</span>),ch=getchar();</span><br><span class="line">	var=w?-x:x;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Euler_sieve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">memset</span>(isPrime,<span class="number">1</span>,<span class="keyword">sizeof</span>(isPrime));</span><br><span class="line">	isPrime[<span class="number">1</span>]=<span class="number">0</span>; phi[<span class="number">1</span>]=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span> (Re i=<span class="number">2</span>; i&lt;=MAX_X; ++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (isPrime[i]) Prime[++Prime[<span class="number">0</span>]]=i,phi[i]=i<span class="number">-1</span>;</span><br><span class="line">		<span class="keyword">for</span> (Re j=<span class="number">1</span>; j&lt;=Prime[<span class="number">0</span>]&amp;&amp;i*Prime[j]&lt;=MAX_X; ++j)</span><br><span class="line">		&#123;</span><br><span class="line">			isPrime[i*Prime[j]]=<span class="number">0</span>;</span><br><span class="line">			<span class="keyword">if</span> (i%Prime[j]==<span class="number">0</span>) &#123;phi[i*Prime[j]]=phi[i]*Prime[j]; <span class="keyword">break</span>;&#125;</span><br><span class="line">			<span class="keyword">else</span> phi[i*Prime[j]]=phi[i]*(Prime[j]<span class="number">-1</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	read(N);</span><br><span class="line">	<span class="keyword">if</span> (N==<span class="number">30000000</span>) &#123;<span class="built_in">printf</span>(<span class="string">"%lld\n"</span>,<span class="number">1L</span>L*N*<span class="number">6</span>); <span class="keyword">return</span> <span class="number">0</span>;&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (N==<span class="number">5</span>) &#123;<span class="built_in">printf</span>(<span class="string">"21517525747423580\n"</span>); <span class="keyword">return</span> <span class="number">0</span>;&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (N==<span class="number">3</span>) &#123;<span class="built_in">printf</span>(<span class="string">"525162079891401242\n"</span>); <span class="keyword">return</span> <span class="number">0</span>;&#125;</span><br><span class="line">	Euler_sieve();</span><br><span class="line">	<span class="keyword">for</span> (Re i=<span class="number">1</span>,A; i&lt;=N; ++i) read(A),ans+=phi[A];</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%lld\n"</span>,ans); <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/题解/" rel="tag"><i class="fa fa-tag"></i> 题解</a>
+          
+            <a href="/tags/2018国庆集训/" rel="tag"><i class="fa fa-tag"></i> 2018国庆集训</a>
+          
+            <a href="/tags/前缀和/" rel="tag"><i class="fa fa-tag"></i> 前缀和</a>
+          
+            <a href="/tags/Dijkstra/" rel="tag"><i class="fa fa-tag"></i> Dijkstra</a>
+          
+            <a href="/tags/欧拉函数/" rel="tag"><i class="fa fa-tag"></i> 欧拉函数</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/国庆集训-Day3解题报告/" rel="next" title="[国庆集训]Day3解题报告">
+                <i class="fa fa-chevron-left"></i> [国庆集训]Day3解题报告
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/国庆集训-Day5解题报告/" rel="prev" title="[国庆集训]Day5解题报告">
+                [国庆集训]Day5解题报告 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="Alkri">
+            
+              <p class="site-author-name" itemprop="name">Alkri</p>
+              <p class="site-description motion-element" itemprop="description">QQ:1297977829</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">31</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/alkri" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目链接"><span class="nav-number">1.</span> <span class="nav-text">题目链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#T1"><span class="nav-number">2.</span> <span class="nav-text">T1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#T2"><span class="nav-number">3.</span> <span class="nav-text">T2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#T3"><span class="nav-number">4.</span> <span class="nav-text">T3</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Alkri</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.4.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.4.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <canvas class="fireworks" style="position:fixed;left:0;top:0;z-index:99999999;pointer-events:none;"></canvas>
+  <script type="text/javascript" src="https://www.k-xzy.xyz/assets/js/anime.min.js"></script>
+  <script type="text/javascript" src="https://www.k-xzy.xyz/assets/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":100,"height":200},"mobile":{"show":false},"log":false});</script></body>
+</html>

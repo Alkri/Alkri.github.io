@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.4.2" rel="stylesheet" type="text/css">
+
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.2">
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.4.2',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="导言最近在学习OI中的数学，什么线性筛、欧拉函数等等。博主觉得这些知识点太繁杂了，决定整理一下，顺便做个笔记，也帮助大家整理一下知识点。顺便NOIP2018_RP++;ヾ(´∀`o)+。（真的只是浅谈）">
+<meta name="keywords" content="欧拉函数,笔记,线性筛,GCD,快速幂">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[笔记]OI中的数学">
+<meta property="og:url" content="http://alkri.github.com/笔记-OI中的数学/index.html">
+<meta property="og:site_name" content="Alkri&#39;s Blog">
+<meta property="og:description" content="导言最近在学习OI中的数学，什么线性筛、欧拉函数等等。博主觉得这些知识点太繁杂了，决定整理一下，顺便做个笔记，也帮助大家整理一下知识点。顺便NOIP2018_RP++;ヾ(´∀`o)+。（真的只是浅谈）">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-23T14:31:53.401Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[笔记]OI中的数学">
+<meta name="twitter:description" content="导言最近在学习OI中的数学，什么线性筛、欧拉函数等等。博主觉得这些知识点太繁杂了，决定整理一下，顺便做个笔记，也帮助大家整理一下知识点。顺便NOIP2018_RP++;ヾ(´∀`o)+。（真的只是浅谈）">
+
+
+
+
+
+
+  <link rel="canonical" href="http://alkri.github.com/笔记-OI中的数学/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>[笔记]OI中的数学 | Alkri's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Alkri's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">31</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">12</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://alkri.github.com/笔记-OI中的数学/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alkri">
+      <meta itemprop="description" content="QQ:1297977829">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alkri's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[笔记]OI中的数学
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-10-23 22:09:37 / 修改时间：22:31:53" itemprop="dateCreated datePublished" datetime="2018-10-23T22:09:37+08:00">2018-10-23</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="导言"><a href="#导言" class="headerlink" title="导言"></a>导言</h4><p>最近在学习OI中的数学，什么线性筛、欧拉函数等等。博主觉得这些知识点太繁杂了，决定整理一下，顺便做个笔记，也帮助大家整理一下知识点。顺便NOIP2018_RP++;ヾ(´∀`o)+。（真的只是浅谈）</p>
+<a id="more"></a>
+<h1 id="1-素数筛法"><a href="#1-素数筛法" class="headerlink" title="1. 素数筛法"></a>1. 素数筛法</h1><p>关于素数筛法，有很多算法可以求解。至于算法的效率，高级算法的时间复杂度相对于暴力也有了质的飞跃。</p>
+<h3 id="1-1-暴力枚举筛（别逗了）"><a href="#1-1-暴力枚举筛（别逗了）" class="headerlink" title="1.1 暴力枚举筛（别逗了）"></a>1.1 暴力枚举筛（<del>别逗了</del>）</h3><p>要求解$1 \sim N$所有的质数，可以枚举$1 \sim N$所有数，然后对于每个数$K$我们可以枚举$2 \sim \sqrt{K}$，一一判断是否是$K$的因数。时间复杂度$O(N \sqrt{N})$</p>
+<h3 id="1-2-Eratosthenes筛法"><a href="#1-2-Eratosthenes筛法" class="headerlink" title="1.2 Eratosthenes筛法"></a>1.2 Eratosthenes筛法</h3><p>摘一段百度百科的话。。</p>
+<blockquote>
+<p>筛法是一种简单检定<a href="https://baike.baidu.com/item/%E7%B4%A0%E6%95%B0/115069" target="_blank" rel="noopener">素数</a>的算法。据说是古希腊的<a href="https://baike.baidu.com/item/%E5%9F%83%E6%8B%89%E6%89%98%E6%96%AF%E7%89%B9%E5%B0%BC/841011" target="_blank" rel="noopener">埃拉托斯特尼</a>（Eratosthenes，约公元前274～194年）发明的，又称<a href="https://baike.baidu.com/item/%E5%9F%83%E6%8B%89%E6%89%98%E6%96%AF%E7%89%B9%E5%B0%BC%E7%AD%9B%E6%B3%95/374984" target="_blank" rel="noopener">埃拉托斯特尼筛法</a>（sieve of Eratosthenes）。</p>
+</blockquote>
+<p>好了，具体怎么实现呢？</p>
+<p>由于一个合数总是可以分解成若干个质数的乘积，那么如果把质数（最初只知道2是质数）的倍数都去掉，那么剩下的就是质数了。</p>
+<p>例如要查找$100$以内的质数，首先$2$是质数，把$2$的倍数去掉；此时$3$没有被去掉，可认为是质数，所以把$3$的倍数去掉；再到$5$，再到$7$，$7$之后呢，因为$8,9,10$刚才都被去掉了，而$100$以内的任意合数肯定都有一个因子小于$10(\sqrt{100})$，所以，去掉$2,3,5,7$的倍数后剩下的都是质数了。</p>
+<p>在做EratosthenesEratosthenes的时候我们还可以考虑一个优化：</p>
+<blockquote>
+<p>对于素数$p$，我们只筛除倍数$x \ge p$的数</p>
+<p>为什么呢？如果$x&lt;p$，则$x$中一定有比$p$小的素因子，$p∗x$会在前面的筛选过程中被筛除。</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MaxN 1000000</span></span><br><span class="line"><span class="keyword">bool</span> isPrime[MaxN+<span class="number">1</span>];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Eratos</span><span class="params">(<span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	isPrime[<span class="number">0</span>]=isPrime[<span class="number">1</span>]=<span class="literal">false</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">2</span>; i&lt;=N; ++i) </span><br><span class="line">		isPrime[i]=<span class="literal">true</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">2</span>; i*i&lt;=N; ++i) </span><br><span class="line">		<span class="keyword">if</span> (isPrime[i])</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> j=i*i; j&lt;=N; j+=i)</span><br><span class="line">				isPrime[j]=<span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="1-3-欧拉筛法（线性筛）"><a href="#1-3-欧拉筛法（线性筛）" class="headerlink" title="1.3 欧拉筛法（线性筛）"></a>1.3 欧拉筛法（线性筛）</h3><p>素数筛法中最出名的应该算是线性筛了，它能够在$O(N)$的时间复杂度内筛出$1 \sim N$中所有的素数。</p>
+<p>简单来说，线性筛就是筛除<strong>素数的倍数</strong>，但是要保证每个合数只被它的<strong>最小素因子筛除</strong>。</p>
+<p>举个栗子↓↓↓</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>素数表</th>
+<th>筛除的数</th>
+<th></th>
+<th>素数表</th>
+<th>筛除的数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2</td>
+<td>{2}</td>
+<td>{4}</td>
+<td>13</td>
+<td>{2,3,5,7,11,13}</td>
+<td>{26,39}</td>
+</tr>
+<tr>
+<td>3</td>
+<td>{2,3}</td>
+<td>{6,9}</td>
+<td>14</td>
+<td>{2,3,5,7,11,13}</td>
+<td>{28}</td>
+</tr>
+<tr>
+<td>4</td>
+<td>{2,3}</td>
+<td>{8}</td>
+<td>15</td>
+<td>{2,3,5,7,11,13}</td>
+<td>{30,45}</td>
+</tr>
+<tr>
+<td>5</td>
+<td>{2,3,5}</td>
+<td>{10,15,25}</td>
+<td>16</td>
+<td>{2,3,5,7,11,13}</td>
+<td>{32}</td>
+</tr>
+<tr>
+<td>6</td>
+<td>{2,3,5}</td>
+<td>{12}</td>
+<td>17</td>
+<td>{2,3,5,7,11,13,17}</td>
+<td>{34}</td>
+</tr>
+<tr>
+<td>7</td>
+<td>{2,3,5,7}</td>
+<td>{14,21,35,49}</td>
+<td>18</td>
+<td>{2,3,5,7,11,13,17}</td>
+<td>{36}</td>
+</tr>
+<tr>
+<td>8</td>
+<td>{2,3,5,7}</td>
+<td>{16}</td>
+<td>19</td>
+<td>{2,3,5,7,11,13,17,19}</td>
+<td>{38}</td>
+</tr>
+<tr>
+<td>9</td>
+<td>{2,3,5,7}</td>
+<td>{18,27}</td>
+<td>20</td>
+<td>{2,3,5,7,11,13,17,19}</td>
+<td>{20}</td>
+</tr>
+<tr>
+<td>10</td>
+<td>{2,3,5,7}</td>
+<td>{20}</td>
+<td>21</td>
+<td>{2,3,5,7,11,13,17,19}</td>
+<td>{42}</td>
+</tr>
+<tr>
+<td>11</td>
+<td>{2,3,5,7,11}</td>
+<td>{22,33}</td>
+<td>22</td>
+<td>{2,3,5,7,11,13,17,19}</td>
+<td>{44}</td>
+</tr>
+<tr>
+<td>12</td>
+<td>{2,3,5,7,11}</td>
+<td>{24}</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+</tbody>
+</table>
+<p>枚举$2 \sim N$中的每一个数$i$：<br>如果$i$是素数则保存到素数表中;<br>利用$i$和素数表中的素数$prime[j]$去筛除$i \times prime[j]$，为了确保$i \times prime[j]$只被素数$prime[j]$筛除过这一次，要确保$prime[j]$是$i \times prime[j]$中最小的素因子，即$i$中不能有比$prime[j]$还要小的素因子。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Euler_sieve</span><span class="params">(<span class="keyword">int</span> N)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">memset</span>(isPrime,<span class="literal">true</span>,<span class="keyword">sizeof</span>(isPrime));</span><br><span class="line">	prime[<span class="number">0</span>]=<span class="number">0</span>; <span class="comment">//prime[0]用来记录当前素数个数</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>; i&lt;=N; ++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (isPrime[i]) prime[++prime[<span class="number">0</span>]]=i; <span class="comment">//把素数保存到素数表prime中，并更新素数个数</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">1</span>; j&lt;=prime[<span class="number">0</span>]&amp;&amp;i*prime[j]&lt;=N; ++j)</span><br><span class="line">		&#123;</span><br><span class="line">			isPrime[i*prime[j]]=<span class="literal">false</span>; <span class="comment">//筛除i*prime[j]</span></span><br><span class="line">			<span class="keyword">if</span> (i%prime[j]==<span class="number">0</span>) <span class="keyword">break</span>;</span><br><span class="line">			<span class="comment">//当i中含有素因子prime[j]时中断循环,确保每个数只被它的最小素因子筛除</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="2-最大公因数和最小公倍数"><a href="#2-最大公因数和最小公倍数" class="headerlink" title="2. 最大公因数和最小公倍数"></a>2. 最大公因数和最小公倍数</h1><p>OI中求最大公因数的常用方法就是欧几里得算法（辗转相除法）</p>
+<p>给个模版吧，时间复杂度为$O(log(a+b))$</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">gcd</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span> </span>&#123;<span class="keyword">return</span> b==<span class="number">0</span>?a:gcd(b,a%b);&#125;</span><br></pre></td></tr></table></figure>
+<p>这里还有一些关于$gcd$的性质</p>
+<table>
+<thead>
+<tr>
+<th>gcd(a,b)=gcd(b,a)</th>
+<th>gcd(a,0)=0</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>gcd(a,b)=gcd(-a,b)</strong></td>
+<td><strong>gcd(a,ka)=a</strong></td>
+</tr>
+<tr>
+<td>**gcd(a,b)=gcd(\</td>
+<td>a\</td>
+<td>,\</td>
+<td>b\</td>
+<td>)**</td>
+<td><strong>gcd(an,bn)=n*gcd(a,b)</strong></td>
+</tr>
+<tr>
+<td>**若d\</td>
+<td>a且d\</td>
+<td>b，则d\</td>
+<td>gcd(a,b)**</td>
+<td><strong>gcd(a,b)=gcd(a,ka+b)</strong></td>
+</tr>
+</tbody>
+</table>
+<p>利用以上的性质我们也可以很容易的证明出欧几里得算法。</p>
+<p>这里就不做说明了。</p>
+<p>关于最小公倍数，求法也很简单：$lcm(a,b)=a/gcd(a,b)∗b$</p>
+<p>这里最好先除再乘，防止爆$long \space long$</p>
+<h1 id="3-快速幂"><a href="#3-快速幂" class="headerlink" title="3. 快速幂"></a>3. 快速幂</h1><p>顾名思义，快速幂就是快速算底数的$N$次幂。其时间复杂度为$O(log_2N)$， 与朴素的$O(N)$相比效率有了极大的提高。</p>
+<p>而快速幂的核心思想就是对指数进行二进制分解。举个栗子或许更好理解</p>
+<p>例如：由于$11$的二进制是$1011$，所以$11=2^0+2^1+2^3$。所以可以进行转化$a^{11}=a^{2^0+2^1+2^3}$</p>
+<p>于是我们转化为求解$a^{11}=a^{2^0} \times a^{2^1} \times a^{2^3}$</p>
+<p>效率就可以大大的提升，快速幂可以用位运算来实现</p>
+<p><code>b &amp; 1 //取b二进制的最低位，判断和1是否相同，相同返回1，否则返回0，可用于判断奇偶</code></p>
+<p><code>b &gt;&gt; 1 //就是将b的二进制右移一位，去掉b的二进制最低位(即第0位)，相当于除2</code></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">FastPower</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> ret=<span class="number">1</span>,base=a;</span><br><span class="line">	<span class="keyword">while</span> (b)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(b&amp;<span class="number">1</span>) ret*=base;</span><br><span class="line">		base*=base; b&gt;&gt;=<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="4-欧拉函数"><a href="#4-欧拉函数" class="headerlink" title="4. 欧拉函数"></a>4. 欧拉函数</h1><h3 id="4-1-欧拉函数定义"><a href="#4-1-欧拉函数定义" class="headerlink" title="4.1 欧拉函数定义"></a>4.1 欧拉函数定义</h3><p>在数论，对正整数N，欧拉函数是<strong>小于或等于N的正整数中与N互质的数的数目</strong>$(\varphi(1)=1)$。此函数以其首名研究者欧拉命名(Euler’s totient function)，它又称为Euler’s totient function、$\varphi$函数、欧拉商数等。 例如$\varphi(8)=4$，因为$1,3,5,7$均和$8$互质。</p>
+<h3 id="4-2-求解欧拉函数"><a href="#4-2-求解欧拉函数" class="headerlink" title="4.2 求解欧拉函数"></a>4.2 求解欧拉函数</h3><p>求欧拉函数有一个通式：$\varphi(x)=x∗\prod^{N}_{i=1}(1−\frac{1}{pi})$</p>
+<p>其中$p1,p2……pn$为$x$的所有质因数，$x$是不为0的整数。</p>
+<p>怎么证明呢，其实有一种很好理解的证明方法。</p>
+<p>用数学期望来证明的话，对于$x$的每个素因子$pi$，在$1 \sim N$的范围内，含质因子$pi$的概率为$\frac{1}{pi}$，所以不含质因子$pi$的概率为$1−\frac{1}{pi}$，然后把概率乘起来就是$\varphi(x)$的值了。</p>
+<h3 id="4-3-欧拉函数的性质"><a href="#4-3-欧拉函数的性质" class="headerlink" title="4.3 欧拉函数的性质"></a>4.3 欧拉函数的性质</h3><p>有一个很明显的定理，当$p$为质数时，$\varphi(p)=p−1$</p>
+<p>欧拉定理：对于互质的正整数$a$和$n$，有$a^{\varphi(n)}≡1(mod \space n)$。</p>
+<p>欧拉函数是积性函数——若$m,n$互质，$\varphi(mn)=\varphi(m)\varphi(n)$。</p>
+<p>若$n$是质数$p$的$k$次幂，$\varphi(n)=p^k−p^{k−1}=(p−1)p^{k−1}$，因为除了$p$的倍数外，其他数都跟$n$互质。</p>
+<p>特殊性质：当$n$为奇数时，$\varphi(2n)=\varphi(n)$</p>
+<p>欧拉函数还有这样的性质：</p>
+<p>设$a$为$N$的质因数</p>
+<ul>
+<li>若$N\%a=0 \space and \space (N/a)\%a=0$则有$\varphi(N)=\varphi(N/a) \times a$</li>
+<li>若$N\%a=0 \space and \space (N/a)\%a!=0$则有$\varphi(N)=\varphi(N/a) \times (a−1)$</li>
+</ul>
+<h3 id="4-4-线性求欧拉函数"><a href="#4-4-线性求欧拉函数" class="headerlink" title="4.4 线性求欧拉函数"></a>4.4 线性求欧拉函数</h3><p>关于欧拉函数的线性筛法，利用上面的两条性质可以实现，下面给出了代码</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Euler_sieve</span><span class="params">(<span class="keyword">int</span> N)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">memset</span>(isPrime,<span class="literal">true</span>,<span class="keyword">sizeof</span>(isPrime));</span><br><span class="line">	phi[<span class="number">1</span>]=<span class="number">1</span>; prime[<span class="number">0</span>]=<span class="number">0</span>; <span class="comment">//记录当前素数个数，phi[i]为i对应的欧拉函数值</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">2</span>; i&lt;=N; ++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (isPrime[i]) prime[++prime[<span class="number">0</span>]]=i,phi[i]=i<span class="number">-1</span>;</span><br><span class="line">			<span class="comment">//把素数保存到素数表prime中，并更新素数个数</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">1</span>; j&lt;=prime[<span class="number">0</span>]&amp;&amp;i*prime[j]&lt;=N; ++j)</span><br><span class="line">		&#123;</span><br><span class="line">			isPrime[i*prime[j]]=<span class="literal">false</span>; <span class="comment">//筛除i*prime[j]</span></span><br><span class="line">			<span class="keyword">if</span> (i%prime[j]==<span class="number">0</span>) &#123;phi[i*prime[j]]=phi[i]*prime[j];<span class="keyword">break</span>;&#125;</span><br><span class="line">			<span class="comment">//当i中含有素因子prime[j]时中断循环,确保每个数只被它的最小素因子筛除</span></span><br><span class="line">			<span class="keyword">else</span> phi[i*prime[j]]=phi[i]*(prime[j]<span class="number">-1</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/欧拉函数/" rel="tag"><i class="fa fa-tag"></i> 欧拉函数</a>
+          
+            <a href="/tags/笔记/" rel="tag"><i class="fa fa-tag"></i> 笔记</a>
+          
+            <a href="/tags/线性筛/" rel="tag"><i class="fa fa-tag"></i> 线性筛</a>
+          
+            <a href="/tags/GCD/" rel="tag"><i class="fa fa-tag"></i> GCD</a>
+          
+            <a href="/tags/快速幂/" rel="tag"><i class="fa fa-tag"></i> 快速幂</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/国庆集训-Day6解题报告/" rel="next" title="[国庆集训]Day6解题报告">
+                <i class="fa fa-chevron-left"></i> [国庆集训]Day6解题报告
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/NOIP2018-提高初赛划水记/" rel="prev" title="[NOIP2018]提高初赛划水记">
+                [NOIP2018]提高初赛划水记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="Alkri">
+            
+              <p class="site-author-name" itemprop="name">Alkri</p>
+              <p class="site-description motion-element" itemprop="description">QQ:1297977829</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">31</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/alkri" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#导言"><span class="nav-number">1.</span> <span class="nav-text">导言</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#1-素数筛法"><span class="nav-number"></span> <span class="nav-text">1. 素数筛法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-暴力枚举筛（别逗了）"><span class="nav-number"></span> <span class="nav-text">1.1 暴力枚举筛（别逗了）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-Eratosthenes筛法"><span class="nav-number"></span> <span class="nav-text">1.2 Eratosthenes筛法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-欧拉筛法（线性筛）"><span class="nav-number"></span> <span class="nav-text">1.3 欧拉筛法（线性筛）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-最大公因数和最小公倍数"><span class="nav-number"></span> <span class="nav-text">2. 最大公因数和最小公倍数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-快速幂"><span class="nav-number"></span> <span class="nav-text">3. 快速幂</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-欧拉函数"><span class="nav-number"></span> <span class="nav-text">4. 欧拉函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-欧拉函数定义"><span class="nav-number"></span> <span class="nav-text">4.1 欧拉函数定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-求解欧拉函数"><span class="nav-number"></span> <span class="nav-text">4.2 求解欧拉函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-欧拉函数的性质"><span class="nav-number"></span> <span class="nav-text">4.3 欧拉函数的性质</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-线性求欧拉函数"><span class="nav-number"></span> <span class="nav-text">4.4 线性求欧拉函数</span></a></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Alkri</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.4.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.4.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <canvas class="fireworks" style="position:fixed;left:0;top:0;z-index:99999999;pointer-events:none;"></canvas>
+  <script type="text/javascript" src="https://www.k-xzy.xyz/assets/js/anime.min.js"></script>
+  <script type="text/javascript" src="https://www.k-xzy.xyz/assets/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":100,"height":200},"mobile":{"show":false},"log":false});</script></body>
+</html>

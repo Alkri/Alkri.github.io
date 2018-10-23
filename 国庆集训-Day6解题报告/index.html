@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.4.2" rel="stylesheet" type="text/css">
+
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.2">
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.4.2',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="题目链接戳我n(≧▽≦)n 注：T3换为跳跳棋">
+<meta name="keywords" content="题解,LCA,2018国庆集训,二分答案,背包DP,Tire树">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[国庆集训]Day6解题报告">
+<meta property="og:url" content="http://alkri.github.com/国庆集训-Day6解题报告/index.html">
+<meta property="og:site_name" content="Alkri&#39;s Blog">
+<meta property="og:description" content="题目链接戳我n(≧▽≦)n 注：T3换为跳跳棋">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-23T09:58:58.475Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[国庆集训]Day6解题报告">
+<meta name="twitter:description" content="题目链接戳我n(≧▽≦)n 注：T3换为跳跳棋">
+
+
+
+
+
+
+  <link rel="canonical" href="http://alkri.github.com/国庆集训-Day6解题报告/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>[国庆集训]Day6解题报告 | Alkri's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Alkri's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">31</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">12</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://alkri.github.com/国庆集训-Day6解题报告/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alkri">
+      <meta itemprop="description" content="QQ:1297977829">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alkri's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[国庆集训]Day6解题报告
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-10-23 17:47:32 / 修改时间：17:58:58" itemprop="dateCreated datePublished" datetime="2018-10-23T17:47:32+08:00">2018-10-23</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="题目链接"><a href="#题目链接" class="headerlink" title="题目链接"></a>题目链接</h3><p><a href="/downloads/2018国庆Day6.pdf">戳我n(≧▽≦)n</a></p>
+<p>注：T3换为<a href="https://www.luogu.org/problemnew/show/P1852" target="_blank" rel="noopener">跳跳棋</a></p>
+<a id="more"></a>
+<h3 id="T1"><a href="#T1" class="headerlink" title="T1"></a>T1</h3><p>我真是蒟蒻。。。</p>
+<p>先放一段官方题解</p>
+<blockquote>
+<p>在题目没有给出特殊约束的情况下永远不要考虑对背包算法的优化</p>
+<p>因为这是不可能的事情</p>
+<p>……</p>
+</blockquote>
+<p>然后。。。我真的在想怎么优化这个01背包…QAQ</p>
+<p>然后。。。就没然后了。。。果断交了一个$O(N^3)$的暴力。。。</p>
+<p>那么，我们现在来讲正解。我们考虑做两次的01背包，先正着做一次，再倒着做一次。</p>
+<p>（<strong>常用手法</strong>。一般取掉一个元素的话，就是让原来的序列变成两段。然后正着做一遍，倒着做一遍。）</p>
+<ul>
+<li>记录$f[i][j]$为从第$1 \sim i$个物品，花费钱数为$j$时，所能取到的最大喜好程度。</li>
+<li>记录$g[i][j]$为从第$i \sim N$个物品，花费钱数为$j$时，所能取到的最大喜好程度。</li>
+</ul>
+<p>那么我们就可以在$O(2 \times N^2)$的时间内预处理出这两个数组。</p>
+<p>然后对于每次询问，我们可以枚举买前面物品用的钱，然后统计答案，取最大值即可。</p>
+<p>总的来说还是我太菜了。</p>
+<p>$Mark$一下：</p>
+<ul>
+<li>在题目没有给出特殊约束的情况下永远不要考虑对背包算法的优化</li>
+<li>在题目没有给出特殊约束的情况下永远不要考虑对背包算法的优化</li>
+<li>在题目没有给出特殊约束的情况下永远不要考虑对背包算法的优化</li>
+</ul>
+<p>重要的$Mark$要记$3$遍！</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Re register int</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> N,M,A[<span class="number">1005</span>],B[<span class="number">1005</span>],f[<span class="number">1005</span>][<span class="number">1005</span>],g[<span class="number">1005</span>][<span class="number">1005</span>],a,b;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">read</span><span class="params">(T &amp;var)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	T x=<span class="number">0</span>; <span class="keyword">int</span> w=<span class="number">0</span>; <span class="keyword">char</span> ch=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span> (!<span class="built_in">isdigit</span>(ch)) w|=ch==<span class="string">'-'</span>,ch=getchar();</span><br><span class="line">	<span class="keyword">while</span> (<span class="built_in">isdigit</span>(ch)) x=(x&lt;&lt;<span class="number">1</span>)+(x&lt;&lt;<span class="number">3</span>)+(ch^<span class="number">48</span>),ch=getchar();</span><br><span class="line">	var=w?-x:x;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">max</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span> </span>&#123;<span class="keyword">return</span> a&gt;b?a:b;&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	read(N);</span><br><span class="line">	<span class="keyword">for</span> (Re i=<span class="number">1</span>,tmp; i&lt;=N; ++i)</span><br><span class="line">		read(A[i]),read(B[i]),read(tmp);</span><br><span class="line">	<span class="keyword">for</span> (Re i=<span class="number">1</span>; i&lt;=N; ++i)</span><br><span class="line">		<span class="keyword">for</span> (Re j=<span class="number">0</span>; j&lt;=<span class="number">1000</span>; ++j)</span><br><span class="line">		&#123;</span><br><span class="line">			f[i][j]=f[i<span class="number">-1</span>][j];</span><br><span class="line">			<span class="keyword">if</span> (j&gt;=A[i]) f[i][j]=max(f[i][j],f[i<span class="number">-1</span>][j-A[i]]+B[i]);</span><br><span class="line">		&#125;</span><br><span class="line">	<span class="keyword">for</span> (Re i=N; i&gt;=<span class="number">1</span>; --i)</span><br><span class="line">		<span class="keyword">for</span> (Re j=<span class="number">0</span>; j&lt;=<span class="number">1000</span>; ++j)</span><br><span class="line">		&#123;</span><br><span class="line">			g[i][j]=g[i+<span class="number">1</span>][j];</span><br><span class="line">			<span class="keyword">if</span> (j&gt;=A[i]) g[i][j]=max(g[i][j],g[i+<span class="number">1</span>][j-A[i]]+B[i]);</span><br><span class="line">		&#125;</span><br><span class="line">	read(M);</span><br><span class="line">	<span class="keyword">while</span> (M--)</span><br><span class="line">	&#123;</span><br><span class="line">		read(a),read(b); <span class="keyword">int</span> ans=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span> (Re i=<span class="number">0</span>; i&lt;=b; ++i)</span><br><span class="line">			ans=max(ans,f[a][i]+g[a+<span class="number">2</span>][b-i]);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d\n"</span>,ans);</span><br><span class="line">	&#125; <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="T2"><a href="#T2" class="headerlink" title="T2"></a>T2</h3><p>虽然我会$Trie$树，但是，$O(N^2)$40分我觉得不错！（<del>我想不到，我是蒟蒻</del>）</p>
+<p>初三翘掉晚自习到高中部上课听的$Trie$树，但是从来没用过。。。</p>
+<p>讲正经的了。。。</p>
+<p>首先来明确一下$lowbit(x)$的意义，它求的是$x$在二进制表示下，从低位到高位出现的第一个$1$的位置所对应的数。</p>
+<p>再来考虑任意一对数$Ai,Aj$，我们要求$lowbit(Ai \space xor \space Aj)$，即$Ai,Aj$在二进制表示下从低到高第一次出现对应位置的数不同时，这一位所对应的数。</p>
+<p>于是，我们考虑做一棵$Trie$树，由于$lowbit(x)$求的是最低位的$1$，所以我们考虑倒序将数字插入到$Trie$树中，每一位对应一个结点，这样这棵$Trie$树就是一棵二叉树。</p>
+<p>那么怎么统计答案呢？</p>
+<p>我们还是考虑任意一对数$Ai,Aj$，当$Ai,Aj$的二进制位第一次不同时，它对答案才会有贡献。</p>
+<p>我们假设我们正在遍历一个数$x$，那么当$x$遍历到自己的某一位时（即某个结点），如果发现该节点有两个儿子，就代表说<strong>一定有其他的数从第一位一直到这一位的二进制表达式都与它相同，但在下一位，它们不同了。</strong></p>
+<p>那么这有什么意义呢？此时他们对应位的数字<strong>第一次</strong>不同，我们之前说明过，在此时，它对答案有贡献。</p>
+<p>那么问题来了，怎么知道有多少个数在此时与我们正在遍历的数$x$不同呢？我们可以对每个结点维护经过这一个结点的数的个数，然后我们就可以直接统计答案了。</p>
+<p>注意$long \space long$</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Re register int</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> LL;</span><br><span class="line"><span class="keyword">int</span> N,tot;</span><br><span class="line"><span class="keyword">const</span> LL MOD=<span class="number">199907210507</span>;</span><br><span class="line">LL A[<span class="number">100005</span>],e2[<span class="number">61</span>],cnt[<span class="number">6000005</span>],tr[<span class="number">6000005</span>][<span class="number">2</span>],ans;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">read</span><span class="params">(T &amp;var)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	T x=<span class="number">0</span>; <span class="keyword">int</span> w=<span class="number">0</span>; <span class="keyword">char</span> ch=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span> (!<span class="built_in">isdigit</span>(ch)) w|=ch==<span class="string">'-'</span>,ch=getchar();</span><br><span class="line">	<span class="keyword">while</span> (<span class="built_in">isdigit</span>(ch)) x=(x&lt;&lt;<span class="number">1</span>)+(x&lt;&lt;<span class="number">3</span>)+(ch^<span class="number">48</span>),ch=getchar();</span><br><span class="line">	var=w?-x:x;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">max</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span> </span>&#123;<span class="keyword">return</span> a&gt;b?a:b;&#125;</span><br><span class="line"><span class="function">LL <span class="title">Solve</span><span class="params">(LL x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	LL ret=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (Re cur=<span class="number">0</span>,i=<span class="number">0</span>; i&lt;<span class="number">60</span>; ++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> c=(x&amp;<span class="number">1</span>);</span><br><span class="line">		<span class="keyword">if</span> (tr[cur][c^<span class="number">1</span>])</span><br><span class="line">			(ret+=cnt[tr[cur][c^<span class="number">1</span>]]%MOD*e2[i]%MOD)%=MOD;</span><br><span class="line">		cur=tr[cur][c]; x&gt;&gt;=<span class="number">1</span>;</span><br><span class="line">	&#125; <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	read(N); e2[<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span> (Re i=<span class="number">1</span>; i&lt;=<span class="number">60</span>; ++i) e2[i]=e2[i<span class="number">-1</span>]&lt;&lt;<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span> (Re i=<span class="number">1</span>; i&lt;=N; ++i)</span><br><span class="line">	&#123;</span><br><span class="line">		read(A[i]); LL tmp=A[i];</span><br><span class="line">		<span class="keyword">for</span> (Re cur=<span class="number">0</span>,d=<span class="number">0</span>; d&lt;<span class="number">60</span>; ++d)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">int</span> c=(tmp&amp;<span class="number">1</span>); ++cnt[cur];</span><br><span class="line">			<span class="keyword">if</span> (!tr[cur][c]) tr[cur][c]=++tot;</span><br><span class="line">			cur=tr[cur][c]; tmp&gt;&gt;=<span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (Re i=<span class="number">1</span>; i&lt;=N; ++i)</span><br><span class="line">		(ans+=Solve(A[i]))%=MOD;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%llu\n"</span>,ans);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="T3"><a href="#T3" class="headerlink" title="T3"></a>T3</h3><p>emmm…虽然是Day6的题，但是我10月8号中午才打出来（<del>卧槽作业真TM多，我TM写了一整天</del>）</p>
+<p>。。。</p>
+<p>考试的时候看见这题，感觉好像在哪里见过。然后我考完后到Luogu上搜了一下。。。</p>
+<blockquote>
+<p>[国家集训队]跳跳棋<code>清华集训</code></p>
+</blockquote>
+<p>顿时惊了，算了算了写作业。。。</p>
+<p>好了不扯了。</p>
+<p>我们考虑一组坐标(x,y,z)(x,y,z)，那么每一次的决策可以分成下面几种情况：</p>
+<ol>
+<li>让中间的棋子往左跳，最后的坐标就是(2x−y,x,z)</li>
+<li>让中间的棋子往左跳，最后的坐标就是(x,z,2z−y)</li>
+<li>让旁边的棋子往中间跳，这里还要分两种情况，我就不细写了。</li>
+</ol>
+<p>然后呢，我们来观察一下这种变换，我们考虑往中间跳的操作，(u,v,w)的u或v往中间跳，得到状态(x,y,z)，把这个操作反过来，就相当于(x,y,z)往外跳到了状态(u,v,w)</p>
+<p>所以我们可以考虑建一棵树，操作1,2就相当于当前状态的两个儿子，而操作33就是跳到它的父亲。</p>
+<p>但是我们又面临了一个问题，状态太多存不下。</p>
+<p>因为棋子都是一样的，所以我们只需要存下他的相对位置。</p>
+<p>那么不妨令t1=y−x,t2=z−y，不妨设t1&gt;t2，那么显然(x,y,z)的父亲(u,v,w)，满足v−u=t1−t2,w−v=t2，定义状态(t1,t2)可以转移到状态(t1−t2,t2)。那么显然每一个状态(x,y,z)对应唯一一个(t1,t2)，我们发现了什么？如果t1&gt;t2，那么(t1,t2)−&gt;(t1−t2,t2)或(t1,t2−t1)，那么难道不可以用取模来加速运算吗？即(t1,t2)−&gt;(t1%t2,t2)或(t1,t2%t1)，刚好和求gcd一样！因此这么做就变成O(log2t2)了！</p>
+<p>于是我们可以用O(log2k)的时间得到状态(x,y,z)往中间跳k步得到的状态；那么，我们首先判断初始状态和目标状态是否在一颗树中（即根节点是否相同），如果不同输出”NO”；否则，回忆倍增求lca的过程，类似的我们可以把初始状态和目标状态先提到同一个深度，然后二分它们到其lca的距离即可。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> INF int(1e9)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Re register int</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Node</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> p[<span class="number">4</span>];</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">read</span><span class="params">()</span> </span>&#123;<span class="built_in">scanf</span>(<span class="string">"%d%d%d\n"</span>,&amp;p[<span class="number">1</span>],&amp;p[<span class="number">2</span>],&amp;p[<span class="number">3</span>]);&#125;</span><br><span class="line">	<span class="keyword">bool</span> <span class="keyword">operator</span> != (<span class="keyword">const</span> Node a) <span class="keyword">const</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span> (Re i=<span class="number">1</span>; i&lt;=<span class="number">3</span>; ++i)</span><br><span class="line">			<span class="keyword">if</span> (<span class="keyword">this</span>-&gt;p[i]!=a.p[i]) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;S,T;</span><br><span class="line"><span class="keyword">int</span> deep;</span><br><span class="line"></span><br><span class="line"><span class="function">Node <span class="title">GetStatus</span><span class="params">(Node s,<span class="keyword">int</span> l)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> k=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (deep=<span class="number">0</span>; l; deep+=k)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> t1=s.p[<span class="number">2</span>]-s.p[<span class="number">1</span>],t2=s.p[<span class="number">3</span>]-s.p[<span class="number">2</span>];</span><br><span class="line">		<span class="keyword">if</span> (t1==t2) <span class="keyword">return</span> s;</span><br><span class="line">		<span class="keyword">if</span> (t1&lt;t2)</span><br><span class="line">		&#123;</span><br><span class="line">			k=min((t2<span class="number">-1</span>)/t1,l);</span><br><span class="line">			l-=k; s.p[<span class="number">1</span>]+=k*t1;</span><br><span class="line">			s.p[<span class="number">2</span>]+=k*t1;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			k=min((t1<span class="number">-1</span>)/t2,l);</span><br><span class="line">			l-=k; s.p[<span class="number">2</span>]-=k*t2;</span><br><span class="line">			s.p[<span class="number">3</span>]-=k*t2;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="keyword">return</span> s;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	S.read(),T.read();</span><br><span class="line">	sort(S.p+<span class="number">1</span>,S.p+<span class="number">4</span>); sort(T.p+<span class="number">1</span>,T.p+<span class="number">4</span>);</span><br><span class="line">	Node fa1=GetStatus(S,INF); <span class="keyword">int</span> d1=deep;</span><br><span class="line">	Node fa2=GetStatus(T,INF); <span class="keyword">int</span> d2=deep;</span><br><span class="line">	<span class="keyword">if</span> (fa1!=fa2) &#123;<span class="built_in">puts</span>(<span class="string">"NO"</span>); <span class="keyword">return</span> <span class="number">0</span>;&#125;</span><br><span class="line">	<span class="keyword">if</span> (d1&gt;d2) swap(d1,d2),swap(S,T);</span><br><span class="line">	T=GetStatus(T,d2-d1);</span><br><span class="line">	<span class="keyword">int</span> l=<span class="number">0</span>,r=d1;</span><br><span class="line">	<span class="keyword">while</span> (l&lt;=r)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> mid=(l+r)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">if</span> (GetStatus(S,mid)!=GetStatus(T,mid)) l=mid+<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">else</span> r=mid<span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"YES\n%d\n"</span>,d2-d1+<span class="number">2</span>*l);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/题解/" rel="tag"><i class="fa fa-tag"></i> 题解</a>
+          
+            <a href="/tags/LCA/" rel="tag"><i class="fa fa-tag"></i> LCA</a>
+          
+            <a href="/tags/2018国庆集训/" rel="tag"><i class="fa fa-tag"></i> 2018国庆集训</a>
+          
+            <a href="/tags/二分答案/" rel="tag"><i class="fa fa-tag"></i> 二分答案</a>
+          
+            <a href="/tags/背包DP/" rel="tag"><i class="fa fa-tag"></i> 背包DP</a>
+          
+            <a href="/tags/Tire树/" rel="tag"><i class="fa fa-tag"></i> Tire树</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/国庆集训-Day5解题报告/" rel="next" title="[国庆集训]Day5解题报告">
+                <i class="fa fa-chevron-left"></i> [国庆集训]Day5解题报告
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/笔记-OI中的数学/" rel="prev" title="[笔记]OI中的数学">
+                [笔记]OI中的数学 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="Alkri">
+            
+              <p class="site-author-name" itemprop="name">Alkri</p>
+              <p class="site-description motion-element" itemprop="description">QQ:1297977829</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">31</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/alkri" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目链接"><span class="nav-number">1.</span> <span class="nav-text">题目链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#T1"><span class="nav-number">2.</span> <span class="nav-text">T1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#T2"><span class="nav-number">3.</span> <span class="nav-text">T2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#T3"><span class="nav-number">4.</span> <span class="nav-text">T3</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Alkri</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.4.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.4.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <canvas class="fireworks" style="position:fixed;left:0;top:0;z-index:99999999;pointer-events:none;"></canvas>
+  <script type="text/javascript" src="https://www.k-xzy.xyz/assets/js/anime.min.js"></script>
+  <script type="text/javascript" src="https://www.k-xzy.xyz/assets/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":100,"height":200},"mobile":{"show":false},"log":false});</script></body>
+</html>

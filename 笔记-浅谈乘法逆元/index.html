@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.4.2" rel="stylesheet" type="text/css">
+
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.2">
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.4.2',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="前言我们知道对于加、减、乘运算来说，取模运算都可以分配进去。而类似于$(a/b)\%mod​$这种式子，如果改成$(a\%mod/b\%mod)\%mod​$则有可能螺旋爆炸。所以我们就要用到逆元。">
+<meta name="keywords" content="随手小记,逆元">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[笔记]浅谈乘法逆元">
+<meta property="og:url" content="http://alkri.github.com/笔记-浅谈乘法逆元/index.html">
+<meta property="og:site_name" content="Alkri&#39;s Blog">
+<meta property="og:description" content="前言我们知道对于加、减、乘运算来说，取模运算都可以分配进去。而类似于$(a/b)\%mod​$这种式子，如果改成$(a\%mod/b\%mod)\%mod​$则有可能螺旋爆炸。所以我们就要用到逆元。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-23T15:11:00.521Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[笔记]浅谈乘法逆元">
+<meta name="twitter:description" content="前言我们知道对于加、减、乘运算来说，取模运算都可以分配进去。而类似于$(a/b)\%mod​$这种式子，如果改成$(a\%mod/b\%mod)\%mod​$则有可能螺旋爆炸。所以我们就要用到逆元。">
+
+
+
+
+
+
+  <link rel="canonical" href="http://alkri.github.com/笔记-浅谈乘法逆元/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>[笔记]浅谈乘法逆元 | Alkri's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Alkri's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">31</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">12</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://alkri.github.com/笔记-浅谈乘法逆元/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alkri">
+      <meta itemprop="description" content="QQ:1297977829">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alkri's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[笔记]浅谈乘法逆元
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-10-23 22:48:49 / 修改时间：23:11:00" itemprop="dateCreated datePublished" datetime="2018-10-23T22:48:49+08:00">2018-10-23</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>我们知道对于加、减、乘运算来说，取模运算都可以分配进去。而类似于$(a/b)\%mod​$这种式子，如果改成$(a\%mod/b\%mod)\%mod​$则有可能<strong>螺旋爆炸</strong>。所以我们就要用到<strong>逆元</strong>。</p>
+<a id="more"></a>
+<h2 id="基本定义"><a href="#基本定义" class="headerlink" title="基本定义"></a>基本定义</h2><p>对于一个形似$ax \equiv 1(mod \space p)$的式子，我们称$x$是$a$在$mod \space p$意义下的<strong>逆元</strong>。记作$x=inv(a)$或$x=a−1$</p>
+<p>而对于$a$在$(mod \space p)$意义下存在逆元$x$的必要条件就是$gcd(a,p)=1$，即$a,p$互质。</p>
+<h2 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h2><p>继续我们在前言中提到的问题。对于$(a/b)\%mod$这种式子，我们不能直接取余。</p>
+<p>所以我们就考虑<strong>化除为乘</strong>。什么意思呢？先假设$x$为$b$的逆元，即$x=b−1$。</p>
+<p>有一个基本定理：除以一个数等于乘上这个数的逆元。</p>
+<p>所以我们就可以把式子化成$(ax)\%mod$。这样我们就可以开心的直接取余啦O(∩_∩)O。</p>
+<h2 id="求法"><a href="#求法" class="headerlink" title="求法"></a>求法</h2><p>关于逆元的求法，这里给出$4$种方法，OI中常用。</p>
+<h3 id="1-拓展欧几里得"><a href="#1-拓展欧几里得" class="headerlink" title="1. 拓展欧几里得"></a>1. 拓展欧几里得</h3><p>求解$ax \equiv 1(mod \space p)$这样的方程。</p>
+<p>可以等价转化为求解$ax−kp=1$这样的方程。</p>
+<p>那么我们就可以套用拓展欧几里得解方程。</p>
+<p>但是要注意当且仅当$gcd(a,p)=1$时，才存在$a$在$(mod \space p)$意义下的逆元$x$。</p>
+<p>然后我们求解完后把$x$调整到$1 \sim p−1$即可。</p>
+<p>这个方法常用于单次求一个逆元。时间复杂度较优。常数较小。</p>
+<p>时间复杂度为$O(logN)$</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">exgcd</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b,<span class="keyword">int</span> &amp;x,<span class="keyword">int</span> &amp;y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!b) &#123;x=<span class="number">1</span>,y=<span class="number">0</span>; <span class="keyword">return</span> a;&#125;</span><br><span class="line">	<span class="keyword">int</span> ret=exgcd(b,a%b,y,x);</span><br><span class="line">	y-=x*(a/b); <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">inv</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> p)</span> <span class="comment">//求解ax≡1(mod p)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> x,y;</span><br><span class="line">	<span class="keyword">return</span> exgcd(a,p,x,y)==<span class="number">1</span>?(x+p)%p:<span class="number">-1</span>; <span class="comment">//-1即为不存在逆元</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-费马小定理"><a href="#2-费马小定理" class="headerlink" title="2. 费马小定理"></a>2. 费马小定理</h3><p>先给出费马小定理：$a^{p−1} \equiv 1(mod \space p)$（$p$为质数）</p>
+<p>怎么用呢？我们把上面的式子化作$ax \equiv 1(mod \space p)$的形式，就成为了$a \cdot a^{p−2} \equiv 1(mod \space p)$</p>
+<p>通过观察我们发现，此时的方程的解$x=a^{p−2}$，然后我们用快速幂求解一下就行了。</p>
+<p>这个方法也常用于单次求一个逆元，<strong>但只限于$p$为素数的情况</strong>。</p>
+<p>时间复杂度为$O(log N)$</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">FastPower</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> x)</span> <span class="comment">//计算a^x</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> ret=<span class="number">1</span>,base=a;</span><br><span class="line">    <span class="comment">//一般情况下要long long，根据题目意思来判断</span></span><br><span class="line">	<span class="keyword">while</span> (x)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (x&amp;<span class="number">1</span>) ret=ret*base%mod;</span><br><span class="line">		base=base*base%mod; x&gt;&gt;=<span class="number">1</span>;</span><br><span class="line">	&#125; <span class="keyword">return</span> ret%mod;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">inv</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> p)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> FastPower(a,p<span class="number">-2</span>); <span class="comment">//求逆元</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3-顺序递推法"><a href="#3-顺序递推法" class="headerlink" title="3. 顺序递推法"></a>3. 顺序递推法</h3><blockquote>
+<p><strong>有的时候题目需要多次用到$1 \sim N$里的逆元，我们就需要在更优的时间内求解出$1 \sim N$的逆元</strong></p>
+<p><strong>接下来的2种方法都能实现在$O(N)$的时间复杂度内计算出$1 \sim N$的所有逆元</strong></p>
+</blockquote>
+<p><strong>首先，这种方法还是只适用于$p$为质数的情况</strong>。</p>
+<p>我们假设现在要求解$i$的逆元，$ix \equiv 1(mod \space p)$。</p>
+<p>根据带余除法我们可以得到：$p=ik+r (k=⌊pi⌋)$</p>
+<p>那么我们就有：$ik+r \equiv 0(mod \space p)$</p>
+<p><strong>注意$p$为质数，所以说$r$的逆元一定存在</strong></p>
+<p>由于我们要求$i$的逆元，即求$inv(i)$。所以我们将方程两边同乘$inv(i) \cdot inv(r)$</p>
+<p>由于$i \cdot inv(i) \equiv 1(mod \space p)$。那么，方程就变为</p>
+<p>$=&gt;k \cdot inv(r)+inv(i) \equiv 0(mod \space p)$</p>
+<p>$=&gt;inv(i) \equiv −k \cdot inv(r)(mod \space p)$</p>
+<p>$=&gt;inv(i) \equiv −⌊\frac{p}{i}⌋ \cdot inv(p \space mod \space i)(mod \space p)$</p>
+<p>$=&gt;inv(i) \equiv (p−⌊\frac{p}{i}⌋) \cdot inv(p \space mod \space i)(mod \space p)$</p>
+<p>这样的话就可以由前面推出当前的逆元了。</p>
+<p>代码非常简短。</p>
+<p>时间复杂度为$O(N)$</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">inv[<span class="number">1</span>]=<span class="number">1</span>; <span class="comment">//注意初始化</span></span><br><span class="line"><span class="keyword">for</span> (Re i=<span class="number">2</span>; i&lt;=N; ++i)</span><br><span class="line">	inv[i]=(P-P/i)*inv[P%i]%P;</span><br></pre></td></tr></table></figure>
+<h3 id="4-倒推求阶乘逆元"><a href="#4-倒推求阶乘逆元" class="headerlink" title="4. 倒推求阶乘逆元"></a>4. 倒推求阶乘逆元</h3><p><strong>首先，这种方法又还是只适用于$p$为质数的情况</strong>。</p>
+<p>这种方法常用在组合数中。证法也比较简单。</p>
+<p>我们将$k!$的逆元记作$facinv(k)$。</p>
+<p>由于$facinv((k−1)!) \equiv k∗facinv(k!)(mod \space p)$</p>
+<p>所以$facinv(k!) \equiv (k+1)∗facinv((k+1)!)(mod \space p)$</p>
+<p>这样我们就可以求出$1!∼N!$的逆元。</p>
+<p>但是必须先预处理出$N!$的逆元才能倒推回去。</p>
+<p>预处理可以选择方法$1、2$中的任意一个</p>
+<p>代码也是比较简短的。</p>
+<p>时间复杂度为$O(N)$</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">facinv[N]=FastPower(a,p<span class="number">-2</span>);</span><br><span class="line"><span class="keyword">for</span> (Re i=N<span class="number">-1</span>; i&gt;=<span class="number">1</span>; --i)</span><br><span class="line">    facinv[i]=(i+<span class="number">1</span>)*facinv[i+<span class="number">1</span>]%p;</span><br></pre></td></tr></table></figure>
+<p>这里还可以通过另外的方法再利用$facinv$数组再推算出$1 \sim N$的逆元。</p>
+<p>这里就不做说明了，留给读者自己思考。（<del>反正用第3种就好了嘿嘿嘿</del>）</p>
+<h2 id="总结-amp-模板题"><a href="#总结-amp-模板题" class="headerlink" title="总结&amp;模板题"></a>总结&amp;模板题</h2><p>逆元在OI竞赛中还是算比较常用的知识点了，所以今天特别写了一份比较详细的逆元整理笔记，希望对大家能有帮助O(∩_∩)O。</p>
+<p>模板题<a href="https://www.luogu.org/problemnew/show/P3811" target="_blank" rel="noopener">Luogu P3811</a></p>
+<p>在放上我的代码吧（凑字数(●ˇ∀ˇ●)）</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Re register int</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">long</span> <span class="keyword">long</span> N,P,inv[<span class="number">3000005</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">read</span><span class="params">(T &amp;var)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	T x=<span class="number">0</span>; <span class="keyword">int</span> w=<span class="number">0</span>; <span class="keyword">char</span> ch=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span> (!<span class="built_in">isdigit</span>(ch)) w|=ch==<span class="string">'-'</span>,ch=getchar();</span><br><span class="line">	<span class="keyword">while</span> (<span class="built_in">isdigit</span>(ch)) x=x*<span class="number">10</span>+ch-<span class="string">'0'</span>,ch=getchar();</span><br><span class="line">	var=w?-x:x;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	read(N),read(P); inv[<span class="number">1</span>]=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span> (Re i=<span class="number">2</span>; i&lt;=N; ++i)</span><br><span class="line">		inv[i]=(P-P/i)*inv[P%i]%P;</span><br><span class="line">	<span class="keyword">for</span> (Re i=<span class="number">1</span>; i&lt;=N; ++i)</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%lld\n"</span>,inv[i]);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/随手小记/" rel="tag"><i class="fa fa-tag"></i> 随手小记</a>
+          
+            <a href="/tags/逆元/" rel="tag"><i class="fa fa-tag"></i> 逆元</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/SCOI2010-生成字符串/" rel="next" title="[SCOI2010]生成字符串">
+                <i class="fa fa-chevron-left"></i> [SCOI2010]生成字符串
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="Alkri">
+            
+              <p class="site-author-name" itemprop="name">Alkri</p>
+              <p class="site-description motion-element" itemprop="description">QQ:1297977829</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">31</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/alkri" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本定义"><span class="nav-number">2.</span> <span class="nav-text">基本定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用途"><span class="nav-number">3.</span> <span class="nav-text">用途</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#求法"><span class="nav-number">4.</span> <span class="nav-text">求法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-拓展欧几里得"><span class="nav-number">4.1.</span> <span class="nav-text">1. 拓展欧几里得</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-费马小定理"><span class="nav-number">4.2.</span> <span class="nav-text">2. 费马小定理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-顺序递推法"><span class="nav-number">4.3.</span> <span class="nav-text">3. 顺序递推法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-倒推求阶乘逆元"><span class="nav-number">4.4.</span> <span class="nav-text">4. 倒推求阶乘逆元</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结-amp-模板题"><span class="nav-number">5.</span> <span class="nav-text">总结&amp;模板题</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Alkri</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.4.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.4.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <canvas class="fireworks" style="position:fixed;left:0;top:0;z-index:99999999;pointer-events:none;"></canvas>
+  <script type="text/javascript" src="https://www.k-xzy.xyz/assets/js/anime.min.js"></script>
+  <script type="text/javascript" src="https://www.k-xzy.xyz/assets/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":100,"height":200},"mobile":{"show":false},"log":false});</script></body>
+</html>
