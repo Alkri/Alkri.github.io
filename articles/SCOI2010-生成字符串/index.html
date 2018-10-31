@@ -232,7 +232,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">13</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">14</span></a>
   </li>
         
         
@@ -392,7 +392,7 @@
 <p>然后往下翻，大佬说这是小学奥数（看来这是我小学的锅了。。。）</p>
 <p>然后我还看见了$Catalan$数。（看来是我初中的锅了。。。）</p>
 <p>其实这道题目在构造出模型后问题就迎刃而解。（$dalao$们就别吐槽了）</p>
-<p>先来看一下答案$C^{M}<em>{N+M}−C^{M−1}</em>{N+M}$。为什么答案是这个呢？</p>
+<p>先来看一下答案$C^{M}_{N+M}−C^{M−1}_{N+M}$。为什么答案是这个呢？</p>
 <p>我们考虑建立一个坐标系，将$N+M$作为横坐标，$N−M$作为纵坐标。</p>
 <p>横坐标表示的是字符串的长度，纵坐标表示的是$1$的个数和$0$的个数的差值。</p>
 <p>然后对于在字符串后加入$1$，就相当于向右上方走一格。加入$0$则表示往右下方走一格。</p>
@@ -406,7 +406,7 @@
 <p>我们可以通过<strong>对称</strong>将这段路径对称上去。这样就可以构造出一个从$(0,0)$开始走，经过直线$y=−1$后，再走到$(N+M,N−M)$的路径。</p>
 <p>所以说，从$(0,−2)$走到$(N+M,N−M)$的所有方案数就是所谓的不合法方案数。</p>
 <p>那么此时不合法方案总数就是$C^{M−1}_{N+M}$</p>
-<p>此时问题转化为求$C^{M}<em>{N+M}−C^{M−1}</em>{N+M}$</p>
+<p>此时问题转化为求$C^{M}_{N+M}−C^{M−1}_{N+M}$</p>
 <p>但是题目要求求余，所以我们还需要结合逆元来计算。</p>
 <p>这里就不多讲（下一篇会整理一下逆元）</p>
 <p><del>放贷吗？</del>放代码-&gt;</p>
@@ -533,7 +533,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>

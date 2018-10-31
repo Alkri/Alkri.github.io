@@ -103,7 +103,7 @@
 
 
   <meta name="description" content="导言最近在学习OI中的数学，什么线性筛、欧拉函数等等。博主觉得这些知识点太繁杂了，决定整理一下，顺便做个笔记，也帮助大家整理一下知识点。顺便NOIP2018_RP++;ヾ(´∀`o)+。（真的只是浅谈）">
-<meta name="keywords" content="笔记,欧拉函数,线性筛,GCD,快速幂">
+<meta name="keywords" content="欧拉函数,笔记,线性筛,GCD,快速幂">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[笔记]OI中的数学">
 <meta property="og:url" content="http://alkri.github.com/articles/笔记-OI中的数学/index.html">
@@ -232,7 +232,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">13</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">14</span></a>
   </li>
         
         
@@ -398,6 +398,7 @@
 <h3 id="1-3-欧拉筛法（线性筛）"><a href="#1-3-欧拉筛法（线性筛）" class="headerlink" title="1.3 欧拉筛法（线性筛）"></a>1.3 欧拉筛法（线性筛）</h3><p>素数筛法中最出名的应该算是线性筛了，它能够在$O(N)$的时间复杂度内筛出$1 \sim N$中所有的素数。</p>
 <p>简单来说，线性筛就是筛除<strong>素数的倍数</strong>，但是要保证每个合数只被它的<strong>最小素因子筛除</strong>。</p>
 <p>举个栗子↓↓↓</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -500,12 +501,14 @@
 </tr>
 </tbody>
 </table>
+</div>
 <p>枚举$2 \sim N$中的每一个数$i$：<br>如果$i$是素数则保存到素数表中;<br>利用$i$和素数表中的素数$prime[j]$去筛除$i \times prime[j]$，为了确保$i \times prime[j]$只被素数$prime[j]$筛除过这一次，要确保$prime[j]$是$i \times prime[j]$中最小的素因子，即$i$中不能有比$prime[j]$还要小的素因子。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Euler_sieve</span><span class="params">(<span class="keyword">int</span> N)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">memset</span>(isPrime,<span class="literal">true</span>,<span class="keyword">sizeof</span>(isPrime));</span><br><span class="line">	prime[<span class="number">0</span>]=<span class="number">0</span>; <span class="comment">//prime[0]用来记录当前素数个数</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>; i&lt;=N; ++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (isPrime[i]) prime[++prime[<span class="number">0</span>]]=i; <span class="comment">//把素数保存到素数表prime中，并更新素数个数</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">1</span>; j&lt;=prime[<span class="number">0</span>]&amp;&amp;i*prime[j]&lt;=N; ++j)</span><br><span class="line">		&#123;</span><br><span class="line">			isPrime[i*prime[j]]=<span class="literal">false</span>; <span class="comment">//筛除i*prime[j]</span></span><br><span class="line">			<span class="keyword">if</span> (i%prime[j]==<span class="number">0</span>) <span class="keyword">break</span>;</span><br><span class="line">			<span class="comment">//当i中含有素因子prime[j]时中断循环,确保每个数只被它的最小素因子筛除</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h1 id="2-最大公因数和最小公倍数"><a href="#2-最大公因数和最小公倍数" class="headerlink" title="2. 最大公因数和最小公倍数"></a>2. 最大公因数和最小公倍数</h1><p>OI中求最大公因数的常用方法就是欧几里得算法（辗转相除法）</p>
 <p>给个模版吧，时间复杂度为$O(log(a+b))$</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">gcd</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span> </span>&#123;<span class="keyword">return</span> b==<span class="number">0</span>?a:gcd(b,a%b);&#125;</span><br></pre></td></tr></table></figure>
 <p>这里还有一些关于$gcd$的性质</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -535,6 +538,7 @@
 </tr>
 </tbody>
 </table>
+</div>
 <p>利用以上的性质我们也可以很容易的证明出欧几里得算法。</p>
 <p>这里就不做说明了。</p>
 <p>关于最小公倍数，求法也很简单：$lcm(a,b)=a/gcd(a,b)∗b$</p>
@@ -584,9 +588,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/笔记/" rel="tag"><i class="fa fa-tag"></i> 笔记</a>
-          
             <a href="/tags/欧拉函数/" rel="tag"><i class="fa fa-tag"></i> 欧拉函数</a>
+          
+            <a href="/tags/笔记/" rel="tag"><i class="fa fa-tag"></i> 笔记</a>
           
             <a href="/tags/线性筛/" rel="tag"><i class="fa fa-tag"></i> 线性筛</a>
           
@@ -689,7 +693,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
