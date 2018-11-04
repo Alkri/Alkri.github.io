@@ -102,25 +102,25 @@
 
 
 
-  <meta name="description" content="Description约翰家的N头奶牛每年都会参加“哞哞大会” 。哞哞大会是世界奶牛界的盛事。集会上 的活动很多，比如堆干草，跨栅栏，摸牛仔的屁股等等。当然，哞哞大叫肯定也包括在内。 奶牛们的叫声很大，很多奶牛在参加多年活动之后，实际上已经失去了一部分的听力。 奶牛们已经站在了一条直线上，i号奶牛的坐标为Xi，她只能听到大于Vi的声音。每头奶 牛的位置坐标都是唯一的。 如果i号和j号奶牛想对话，则">
-<meta name="keywords" content="题解,USACO,树状数组">
+  <meta name="description" content="DescriptionSrwudi的家是一幢h层的摩天大楼。由于前来学习的蒟蒻越来越多，srwudi改造了一个跳楼机，使得访客可以更方便的上楼。 经过改造，srwudi的跳楼机可以采用以下四种方式移动：  向上移动x层； 向上移动y层； 向上移动z层； 回到第一层。  一个月黑风高的大中午，DJL来到了srwudi的家，现在他在srwudi家的第一层，碰巧跳楼机也在第一层。DJL想知道，他可以乘坐">
+<meta name="keywords" content="题解,SPFA,思维题">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[USACO]奶牛集会MooFest">
-<meta property="og:url" content="http://alkri.github.com/articles/USACO-奶牛集会MooFest/index.html">
+<meta property="og:title" content="[Luogu]跳楼机P3403">
+<meta property="og:url" content="http://alkri.github.com/articles/Luogu-跳楼机P3403/index.html">
 <meta property="og:site_name" content="Alkri&#39;s Blog">
-<meta property="og:description" content="Description约翰家的N头奶牛每年都会参加“哞哞大会” 。哞哞大会是世界奶牛界的盛事。集会上 的活动很多，比如堆干草，跨栅栏，摸牛仔的屁股等等。当然，哞哞大叫肯定也包括在内。 奶牛们的叫声很大，很多奶牛在参加多年活动之后，实际上已经失去了一部分的听力。 奶牛们已经站在了一条直线上，i号奶牛的坐标为Xi，她只能听到大于Vi的声音。每头奶 牛的位置坐标都是唯一的。 如果i号和j号奶牛想对话，则">
+<meta property="og:description" content="DescriptionSrwudi的家是一幢h层的摩天大楼。由于前来学习的蒟蒻越来越多，srwudi改造了一个跳楼机，使得访客可以更方便的上楼。 经过改造，srwudi的跳楼机可以采用以下四种方式移动：  向上移动x层； 向上移动y层； 向上移动z层； 回到第一层。  一个月黑风高的大中午，DJL来到了srwudi的家，现在他在srwudi家的第一层，碰巧跳楼机也在第一层。DJL想知道，他可以乘坐">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-11-04T09:34:08.075Z">
+<meta property="og:updated_time" content="2018-11-04T15:48:13.992Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="[USACO]奶牛集会MooFest">
-<meta name="twitter:description" content="Description约翰家的N头奶牛每年都会参加“哞哞大会” 。哞哞大会是世界奶牛界的盛事。集会上 的活动很多，比如堆干草，跨栅栏，摸牛仔的屁股等等。当然，哞哞大叫肯定也包括在内。 奶牛们的叫声很大，很多奶牛在参加多年活动之后，实际上已经失去了一部分的听力。 奶牛们已经站在了一条直线上，i号奶牛的坐标为Xi，她只能听到大于Vi的声音。每头奶 牛的位置坐标都是唯一的。 如果i号和j号奶牛想对话，则">
+<meta name="twitter:title" content="[Luogu]跳楼机P3403">
+<meta name="twitter:description" content="DescriptionSrwudi的家是一幢h层的摩天大楼。由于前来学习的蒟蒻越来越多，srwudi改造了一个跳楼机，使得访客可以更方便的上楼。 经过改造，srwudi的跳楼机可以采用以下四种方式移动：  向上移动x层； 向上移动y层； 向上移动z层； 回到第一层。  一个月黑风高的大中午，DJL来到了srwudi的家，现在他在srwudi家的第一层，碰巧跳楼机也在第一层。DJL想知道，他可以乘坐">
 
 
 
 
 
 
-  <link rel="canonical" href="http://alkri.github.com/articles/USACO-奶牛集会MooFest/">
+  <link rel="canonical" href="http://alkri.github.com/articles/Luogu-跳楼机P3403/">
 
 
 
@@ -130,7 +130,7 @@
   };
 </script>
 
-  <title>[USACO]奶牛集会MooFest | Alkri's Blog</title>
+  <title>[Luogu]跳楼机P3403 | Alkri's Blog</title>
   
 
 
@@ -291,7 +291,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://alkri.github.com/articles/USACO-奶牛集会MooFest/">
+    <link itemprop="mainEntityOfPage" href="http://alkri.github.com/articles/Luogu-跳楼机P3403/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Alkri">
@@ -308,7 +308,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">[USACO]奶牛集会MooFest
+          <h1 class="post-title" itemprop="name headline">[Luogu]跳楼机P3403
               
             
           </h1>
@@ -333,7 +333,7 @@
                 
               
 
-              <time title="创建时间：2018-11-04 17:17:52 / 修改时间：17:34:08" itemprop="dateCreated datePublished" datetime="2018-11-04T17:17:52+08:00">2018-11-04</time>
+              <time title="创建时间：2018-11-04 23:19:15 / 修改时间：23:48:13" itemprop="dateCreated datePublished" datetime="2018-11-04T23:19:15+08:00">2018-11-04</time>
             
 
             
@@ -378,34 +378,45 @@
       
 
       
-        <h3 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h3><p>约翰家的N头奶牛每年都会参加“哞哞大会” 。哞哞大会是世界奶牛界的盛事。集会上 的活动很多，比如堆干草，跨栅栏，摸牛仔的屁股等等。当然，哞哞大叫肯定也包括在内。 奶牛们的叫声很大，很多奶牛在参加多年活动之后，实际上已经失去了一部分的听力。</p>
-<p>奶牛们已经站在了一条直线上，i号奶牛的坐标为Xi，她只能听到大于Vi的声音。每头奶 牛的位置坐标都是唯一的。</p>
-<p>如果i号和j号奶牛想对话，则他们使用的音量为max {Vi, Vj} × |Xi −Xj|。</p>
-<p>N头奶牛可以组合成N(N − 1)/2对奶牛，假设每对奶牛都使用最小的音量在对话，请计 算所有奶牛产生的总音量是多少。</p>
+        <h3 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h3><p>Srwudi的家是一幢h层的摩天大楼。由于前来学习的蒟蒻越来越多，srwudi改造了一个跳楼机，使得访客可以更方便的上楼。</p>
+<p>经过改造，srwudi的跳楼机可以采用以下四种方式移动：</p>
+<ol>
+<li>向上移动x层；</li>
+<li>向上移动y层；</li>
+<li>向上移动z层；</li>
+<li>回到第一层。</li>
+</ol>
+<p>一个月黑风高的大中午，DJL来到了srwudi的家，现在他在srwudi家的第一层，碰巧跳楼机也在第一层。DJL想知道，他可以乘坐跳楼机前往的楼层数。</p>
 <a id="more"></a>
-<h3 id="Input-Format"><a href="#Input-Format" class="headerlink" title="Input Format"></a>Input Format</h3><p>第一行：单个整数：$N,1 \le N \le 20000$</p>
-<p>第二行到第$N + 1$行：每行有两个用空格分开的整数，$Vi$和$Xi$，$1 \le Vi \le 20000， 1 \le Xi \le 20000$</p>
-<h3 id="Output-Format"><a href="#Output-Format" class="headerlink" title="Output Format"></a>Output Format</h3><p>第一行：单个整数，表示最小音量之和</p>
-<h3 id="Sample-Input"><a href="#Sample-Input" class="headerlink" title="Sample Input"></a>Sample Input</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">4 </span><br><span class="line">3 1 </span><br><span class="line">2 5 </span><br><span class="line">2 6 </span><br><span class="line">4 3</span><br></pre></td></tr></table></figure>
-<h3 id="Sample-Output"><a href="#Sample-Output" class="headerlink" title="Sample Output"></a>Sample Output</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">57</span><br></pre></td></tr></table></figure>
-<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>扯淡ing……</p>
-<blockquote>
-<p>有人说我博客都荒了（手动@mnihyc）</p>
-<p>马上就NOIP2018了，我都没时间写一些东西啊。。。</p>
-<p>然后现在写一篇题解算是给自己加个油emmm（<del>我知道很水啦，但是我也没做什么好题…</del>）</p>
-</blockquote>
-<p>正题：</p>
-<p>我们考虑式子$max(Vi,Vj) \times |Xi-Xj|$，很明显音量越高的对答案的贡献越大。</p>
-<p>所以，我们可以考虑按照音量大小<strong>升序</strong>排序。那么我们怎么计算$|Xi-Xj|$呢？</p>
-<p>我们考虑用树状数组来维护一下在第$i$头牛前，$X$值比第$i$头牛小的个数。</p>
-<p>那么这头牛$i$对于答案的贡献就为$(cnt \times Xi-len) \times Vi$</p>
-<p>其中$cnt$为在第$i$头牛前，$X$值比第$i$头牛小的个数；$len$为这些比$Xi$小的$X$值的和。</p>
-<p>那么我们就要做树状数组同时维护两个值。</p>
-<p>再来考虑另一半$X$比$i$大的怎么统计答案？</p>
-<p>我们记录从$1 \sim i$的$X$的和，减去$len$，就可以计算出新的$len$。而新的$cnt$就可以直接用$i-cnt$计算得。</p>
-<p>那么另一半的贡献就是$(len-cnt \times Xi) \times Vi$</p>
-<p>这样我们就A了这题了。（学校的机子$O(N^2)$跑过去了什么鬼！）</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Re register int</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LL long long</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Data</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> V,X;</span><br><span class="line">&#125;d[<span class="number">20005</span>];</span><br><span class="line"><span class="keyword">int</span> N,maxx,T[<span class="number">20005</span>];</span><br><span class="line">LL S[<span class="number">20005</span>],Sum,ans;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">read</span><span class="params">(T &amp;var)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	T x=<span class="number">0</span>; <span class="keyword">int</span> w=<span class="number">0</span>; <span class="keyword">char</span> ch=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span> (!<span class="built_in">isdigit</span>(ch)) w|=ch==<span class="string">'-'</span>,ch=getchar();</span><br><span class="line">	<span class="keyword">while</span> (<span class="built_in">isdigit</span>(ch)) x=x*<span class="number">10</span>+ch-<span class="string">'0'</span>,ch=getchar();</span><br><span class="line">	var=w?-x:x;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">lowbit</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;<span class="keyword">return</span> x&amp;-x;&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">max</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span> </span>&#123;<span class="keyword">return</span> a&gt;b?a:b;&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">bool</span> <span class="title">cmp</span><span class="params">(Data a,Data b)</span> </span>&#123;<span class="keyword">return</span> a.V&lt;b.V;&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">AddNum</span><span class="params">(<span class="keyword">int</span> pos)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (Re i=pos; i&lt;=maxx; i+=lowbit(i))</span><br><span class="line">		++T[i],S[i]+=pos; <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">Query</span><span class="params">(<span class="keyword">int</span> pos,LL &amp;cnt,LL &amp;len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cnt=len=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (Re i=pos; i&gt;<span class="number">0</span>; i-=lowbit(i))</span><br><span class="line">		cnt+=T[i],len+=S[i];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	read(N); LL cnt,len;</span><br><span class="line">	<span class="keyword">for</span> (Re i=<span class="number">1</span>; i&lt;=N; ++i)</span><br><span class="line">		read(d[i].V),read(d[i].X),maxx=max(maxx,d[i].X);</span><br><span class="line">	<span class="built_in">std</span>::sort(d+<span class="number">1</span>,d+N+<span class="number">1</span>,cmp);</span><br><span class="line">	<span class="keyword">for</span> (Re i=<span class="number">1</span>; i&lt;=N; ++i)</span><br><span class="line">	&#123;</span><br><span class="line">		Sum+=d[i].X; AddNum(d[i].X);</span><br><span class="line">		Query(d[i].X,cnt,len);</span><br><span class="line">		ans+=(cnt*d[i].X-len)*d[i].V;</span><br><span class="line">		cnt=i-cnt,len=Sum-len;</span><br><span class="line">		ans+=(len-cnt*d[i].X)*d[i].V;</span><br><span class="line">	&#125; <span class="built_in">printf</span>(<span class="string">"%lld\n"</span>,ans);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Input-Format"><a href="#Input-Format" class="headerlink" title="Input Format"></a>Input Format</h3><p>第一行一个整数h，表示摩天大楼的层数。</p>
+<p>第二行三个正整数，分别表示题目中的x, y, z。</p>
+<h3 id="Output-Format"><a href="#Output-Format" class="headerlink" title="Output Format"></a>Output Format</h3><p>一行一个整数，表示DJL可以到达的楼层数。</p>
+<h3 id="Input-Sample"><a href="#Input-Sample" class="headerlink" title="Input Sample"></a>Input Sample</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">15</span><br><span class="line">4 7 9</span><br></pre></td></tr></table></figure>
+<h3 id="Output-Sample"><a href="#Output-Sample" class="headerlink" title="Output Sample"></a>Output Sample</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">9</span><br></pre></td></tr></table></figure>
+<h3 id="Hint"><a href="#Hint" class="headerlink" title="Hint"></a>Hint</h3><p>可以到达的楼层有：1,5,8,9,10,12,13,14,15</p>
+<p>$1 \le h \le 10^{18},1 \le x, y, z \le 10^5$</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>很神奇的题目。。。一开始看到就想起了$NOIp2017D1T1$小凯的疑惑。</p>
+<p>莫非这题是那题的变态加强版？然后也有$O(1)$的解法？？？</p>
+<p>emmm看了一下好像并不行。。。<del>然后发现我只会做两个操作的</del></p>
+<p>首先我们来简化一下题意，题目要求$h=ax+by+cz(h&lt;=H)$这么一个$h$的所有不同取值的个数。</p>
+<p>既然题目有三种操作，我们就一个个考虑过去。</p>
+<p>我们首先考虑两种操作（这里我们选择操作2、3<del>我就喜欢这么选</del>）</p>
+<p>假设我们这时通过几次操作2和几次操作3到了楼层$i$，再来看操作1对答案的贡献，这时候我们可以做任意次的操作1，此时操作1对答案的贡献就是$(H-i)/X$</p>
+<p>这样我们就可以统计答案了吗？</p>
+<p>并不行。在我们统计答案的时候，会发现有重复。而且$i \le 10^{18}$的范围我们也无法承担。</p>
+<p>那么我们需要选择一种不存在重复的统计方式。</p>
+<p>看下数据范围，发现$1 \le x,y,z \le 10^5$，所以肯定是在这里搞事情。</p>
+<p>然后我们考虑进行$mod$操作。</p>
+<p>记录$f_i$表示仅通过操作2和操作3可以到达的在$mod \space X=i$意义下的最小楼层。</p>
+<p>那么我们可以得到$f$数组的转移式</p>
+<ol>
+<li>$f_{(i+y)mod \space x}=f(i)+y$</li>
+<li>$f_{(i+z)mod \space x}=f(i)+z$</li>
+</ol>
+<p>对转移式进行观察，我们发现这就是在求最短路时我们进行转移的式子！$f$在这里就相当于求最短路时的$dis$</p>
+<p>那么我们就可以快速求出所有$f_i$的值。</p>
+<p>然后统计答案，就顺利解决了。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Re register int</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LL long long</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Edge</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> to,next,w;</span><br><span class="line">&#125;e[<span class="number">200005</span>];</span><br><span class="line"><span class="keyword">int</span> cnt,head[<span class="number">100005</span>];</span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">queue</span>&lt;<span class="keyword">int</span>&gt; q;</span><br><span class="line">LL dis[<span class="number">100005</span>],H,ans;</span><br><span class="line"><span class="keyword">int</span> X,Y,Z,vis[<span class="number">100005</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">AddEdge</span><span class="params">(<span class="keyword">int</span> u,<span class="keyword">int</span> v,<span class="keyword">int</span> w)</span> </span>&#123;e[++cnt]=(Edge)&#123;v,head[u],w&#125;; head[u]=cnt;&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">SPFA</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">memset</span>(dis,<span class="number">0x3F</span>,<span class="keyword">sizeof</span>(dis));</span><br><span class="line">	q.push(<span class="number">1</span>%X); dis[<span class="number">1</span>%X]=<span class="number">1</span>; vis[<span class="number">1</span>%X]=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span> (!q.empty())</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> now=q.front(); q.pop(); vis[now]=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span> (Re i=head[now];i;i=e[i].next)</span><br><span class="line">			<span class="keyword">if</span> (dis[e[i].to]&gt;dis[now]+e[i].w)</span><br><span class="line">			&#123;</span><br><span class="line">				dis[e[i].to]=dis[now]+e[i].w;</span><br><span class="line">				<span class="keyword">if</span> (!vis[e[i].to]) vis[e[i].to]=<span class="number">1</span>,q.push(e[i].to);</span><br><span class="line">			&#125;</span><br><span class="line">	&#125; <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%lld%d%d%d"</span>,&amp;H,&amp;X,&amp;Y,&amp;Z);</span><br><span class="line">	<span class="keyword">for</span> (Re i=<span class="number">0</span>; i&lt;X; ++i)</span><br><span class="line">		AddEdge(i,(i+Y)%X,Y),AddEdge(i,(i+Z)%X,Z);</span><br><span class="line">	SPFA();</span><br><span class="line">	<span class="keyword">for</span> (Re i=<span class="number">0</span>; i&lt;X; ++i)</span><br><span class="line">		<span class="keyword">if</span> (dis[i]&lt;=H) ans+=(H-dis[i])/X+<span class="number">1</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%lld\n"</span>,ans);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -428,9 +439,9 @@
           
             <a href="/tags/题解/" rel="tag"><i class="fa fa-tag"></i> 题解</a>
           
-            <a href="/tags/USACO/" rel="tag"><i class="fa fa-tag"></i> USACO</a>
+            <a href="/tags/SPFA/" rel="tag"><i class="fa fa-tag"></i> SPFA</a>
           
-            <a href="/tags/树状数组/" rel="tag"><i class="fa fa-tag"></i> 树状数组</a>
+            <a href="/tags/思维题/" rel="tag"><i class="fa fa-tag"></i> 思维题</a>
           
         </div>
       
@@ -443,8 +454,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/articles/声明-博客重组声明/" rel="next" title="[声明]博客重组声明">
-                <i class="fa fa-chevron-left"></i> [声明]博客重组声明
+              <a href="/articles/USACO-奶牛集会MooFest/" rel="next" title="[USACO]奶牛集会MooFest">
+                <i class="fa fa-chevron-left"></i> [USACO]奶牛集会MooFest
               </a>
             
           </div>
@@ -452,10 +463,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/articles/Luogu-跳楼机P3403/" rel="prev" title="[Luogu]跳楼机P3403">
-                [Luogu]跳楼机P3403 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -653,7 +660,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Description"><span class="nav-number">1.</span> <span class="nav-text">Description</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Input-Format"><span class="nav-number">2.</span> <span class="nav-text">Input Format</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Output-Format"><span class="nav-number">3.</span> <span class="nav-text">Output Format</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sample-Input"><span class="nav-number">4.</span> <span class="nav-text">Sample Input</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sample-Output"><span class="nav-number">5.</span> <span class="nav-text">Sample Output</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#题解"><span class="nav-number"></span> <span class="nav-text">题解</span></a></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Description"><span class="nav-number">1.</span> <span class="nav-text">Description</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Input-Format"><span class="nav-number">2.</span> <span class="nav-text">Input Format</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Output-Format"><span class="nav-number">3.</span> <span class="nav-text">Output Format</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Input-Sample"><span class="nav-number">4.</span> <span class="nav-text">Input Sample</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Output-Sample"><span class="nav-number">5.</span> <span class="nav-text">Output Sample</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hint"><span class="nav-number">6.</span> <span class="nav-text">Hint</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#题解"><span class="nav-number"></span> <span class="nav-text">题解</span></a></li></div>
             
 
           </div>
