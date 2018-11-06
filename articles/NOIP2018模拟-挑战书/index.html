@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.4.2" rel="stylesheet" type="text/css">
+
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.2">
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.4.2',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Description小 $E$ 是一位实力强大的 $OIer$，经常在各类比赛中随手 $AK$ 虐场。然而她最近秒题时遇到了一道需要她思考 $15$ 秒才能做出的题目，整整花了 $15$ 倍于其他题目的时间。她认为这个问题十分有意思，并且对其进行了一些拓展和修改以后抛给了你。你能接受小 $E$ 的挑战吗？ 设 $p_i$ 表示非负整数 $p$ 的二进制表示中在项 $2^i$ 前的系数，对于非负整">
+<meta name="keywords" content="alkri">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[NOIP2018模拟]挑战书">
+<meta property="og:url" content="http://alkri.github.com/articles/NOIP2018模拟-挑战书/index.html">
+<meta property="og:site_name" content="Alkri&#39;s Blog">
+<meta property="og:description" content="Description小 $E$ 是一位实力强大的 $OIer$，经常在各类比赛中随手 $AK$ 虐场。然而她最近秒题时遇到了一道需要她思考 $15$ 秒才能做出的题目，整整花了 $15$ 倍于其他题目的时间。她认为这个问题十分有意思，并且对其进行了一些拓展和修改以后抛给了你。你能接受小 $E$ 的挑战吗？ 设 $p_i$ 表示非负整数 $p$ 的二进制表示中在项 $2^i$ 前的系数，对于非负整">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-11-06T15:43:55.071Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[NOIP2018模拟]挑战书">
+<meta name="twitter:description" content="Description小 $E$ 是一位实力强大的 $OIer$，经常在各类比赛中随手 $AK$ 虐场。然而她最近秒题时遇到了一道需要她思考 $15$ 秒才能做出的题目，整整花了 $15$ 倍于其他题目的时间。她认为这个问题十分有意思，并且对其进行了一些拓展和修改以后抛给了你。你能接受小 $E$ 的挑战吗？ 设 $p_i$ 表示非负整数 $p$ 的二进制表示中在项 $2^i$ 前的系数，对于非负整">
+
+
+
+
+
+
+  <link rel="canonical" href="http://alkri.github.com/articles/NOIP2018模拟-挑战书/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>[NOIP2018模拟]挑战书 | Alkri's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Alkri's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">34</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">17</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://alkri.github.com/articles/NOIP2018模拟-挑战书/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alkri">
+      <meta itemprop="description" content="QQ:1297977829">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alkri's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[NOIP2018模拟]挑战书
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-11-06 23:18:46 / 修改时间：23:43:55" itemprop="dateCreated datePublished" datetime="2018-11-06T23:18:46+08:00">2018-11-06</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h3><p>小 $E$ 是一位实力强大的 $OIer$，经常在各类比赛中随手 $AK$ 虐场。然而她最近秒题时遇到了一道需要她思考 $15$ 秒才能做出的题目，整整花了 $15$ 倍于其他题目的时间。她认为这个问题十分有意思，并且对其进行了一些拓展和修改以后抛给了你。你能接受小 $E$ 的挑战吗？</p>
+<p>设 $p_i$ 表示非负整数 $p$ 的二进制表示中在项 $2^i$ 前的系数，对于非负整数 $p$,$q$ ，可以定义二元运算 $xnor$（同或）为：$p\;xnor\;q=\sum^m_{i=0}{((p_i\wedge q_i)\vee(\neg(p_i\vee q_i)))\times2^i}$（在这里我们认为布尔表达式的值 $false$ 或 $true$ 能够直接对应于整数 $0$ 或 $1$ 并参与算术运算，反之亦然；其中 $M$ 为常数，本题中M 的取值为 $31$）。</p>
+<p>给定一个长度为 $n$ 的非负整数序列 $a$ ，在序列的每个位置上有非负整数权值 $w_i$ ，现在希望实现对该序列的以下操作：</p>
+<ol>
+<li><p>给 定 区 间 $[l,r]$ 和 非 负 整 数 $k$ ， 查 询。 $(\sum_{i=l}^r{a_i\times w’(i))xnor(\sum_{i=l}^r{a_i})}$</p>
+<p>其中$w’(i)=\begin{cases}w_i,if \space w_i \le k \\ 0,if \space w_i&gt;k \end{cases}$。</p>
+</li>
+<li><p>给定正整数 $p$ 和非负整数 $k$ ，将 $a_p$ 的值修改为 $k$ 。</p>
+</li>
+<li><p>给定正整数 $p$ 和非负整数 $k$ ，将 $w_p$ 的值修改为 $k$ 。</p>
+</li>
+</ol>
+<p>如果你不认识题目描述中的某些符号，可参见<code>Hint</code>部分。</p>
+<a id="more"></a>
+<h3 id="Input-Format"><a href="#Input-Format" class="headerlink" title="Input Format"></a>Input Format</h3><p>输入的第 $1$ 行包含两个整数 $n$,$q$ ，$n$ 表示序列长度，$q$ 表示操作次数。</p>
+<p>接下来 $1$ 行，包含 $n$ 个整数，其中第 $i$ 个表示 $a_i$ 。</p>
+<p>接下来 $1$ 行，包含 $n$ 个整数，其中第 $i$ 个表示 $w_i$ 。</p>
+<p>接下来 $q$ 行，每行包含 $4$ 个或 $3$ 个整数，其中第 $1$ 个整数表示操作类型（见题目描述）。</p>
+<p>对于第 $1$ 种操作，接下来 $3$ 个整数依次表示 $l$,$r$,$k$ ；对于第 $2$ 或第 $3$ 种操作，接下来 $2$ 个整数依次表示 $p$,$k$ 。</p>
+<h3 id="Output-Format"><a href="#Output-Format" class="headerlink" title="Output Format"></a>Output Format</h3><p>对于每个第 $1$ 种操作输出一行一个整数，表示答案。</p>
+<h3 id="Input-Sample"><a href="#Input-Sample" class="headerlink" title="Input Sample"></a>Input Sample</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">10 10</span><br><span class="line">13 15 23 45 21 23 14 26 35 44</span><br><span class="line">12 32 15 47 15 32 12 47 32 32</span><br><span class="line">1 2 8 17</span><br><span class="line">2 4 26</span><br><span class="line">1 1 6 47</span><br><span class="line">3 9 6</span><br><span class="line">2 9 4</span><br><span class="line">1 1 7 5</span><br><span class="line">3 7 6</span><br><span class="line">2 7 2</span><br><span class="line">3 3 6</span><br><span class="line">1 4 9 6</span><br></pre></td></tr></table></figure>
+<h3 id="Output-Sample"><a href="#Output-Sample" class="headerlink" title="Output Sample"></a>Output Sample</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">4294966372</span><br><span class="line">4294964016</span><br><span class="line">4294967160</span><br><span class="line">4294967229</span><br></pre></td></tr></table></figure>
+<h3 id="Hint"><a href="#Hint" class="headerlink" title="Hint"></a>Hint</h3><p>【样例 $1$ 说明】</p>
+<p>对于第 $1$ 次询问，$k=17$ ，此时在 $[2,8]$ 区间内第 $3$、第 $5$ 和第 $7$ 位置上的 $w_i\le17$ 。因此<br>答案为$(a_3\times w_3+a_5\times w_5+a_7\times w_7)xnor(\sum_{i=1}^8{a_i})$。按照定义式计算即可得上式的值。</p>
+<p>对于第 $3$ 次询问，此时序列上的权值为 $w=\{12,32,15,47,15,32,12,47,6,32\}$。$k=5$，但不存在 $w_i\le5$ 的位置，因此答案为 $0\;xnor(\sum_{i=1}^7{a_i})$。 </p>
+<p> 【数据范围与约定】</p>
+<p>对于全部数据，有 $1\le n,q\le10^5$，$0\le a_i,w_i,k\le10^5$，$1\le l,r,p\le n$。下表中留空的位置<br>代表该测试点在这一项目上没有特殊约定。</p>
+<p>$\wedge$表示逻辑与（即布尔代数中的与运算 $\text{and}$），$\neg$ 表示逻辑非（即布尔代数中的非运算 $not$）。</p>
+<p>本题输入输出数据规模较大且时限较紧，请不要使用 $C$++ 风格 $I/O$ 操作并考虑使用 $I/O$ 优化。另请注意常数因子对程序效率的影响。标准程序未对常数因子进行专门优化，用时约为所给时间限制的一半。</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p><del>题目怎么那么长啊喂</del>，<del>这样我的题解就短一点吧</del>。</p>
+<p>我们观察$xnor$操作，不难发现这个操作就相当于在无符号的$int$下的$not(x \space xor \space y)$</p>
+<p>然后我们考虑分块，这样就变成一个裸题了，$Ai$的和用树状数组维护。</p>
+<p>注：编译环境下开启$O2$优化</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;math.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;utility&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Re register int</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LL long long</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> uint unsigned int</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> mp make_pair</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> N,Q,A[<span class="number">100005</span>],W[<span class="number">100005</span>],L[<span class="number">405</span>],BlkSz,BlkNum;</span><br><span class="line">LL Sum[<span class="number">100005</span>];</span><br><span class="line"><span class="built_in">std</span>::pair&lt;<span class="keyword">int</span>,LL&gt; Data[<span class="number">100005</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">read</span><span class="params">(T &amp;var)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	T x=<span class="number">0</span>; <span class="keyword">int</span> w=<span class="number">0</span>; <span class="keyword">char</span> ch=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span> (!<span class="built_in">isdigit</span>(ch)) w|=ch==<span class="string">'-'</span>,ch=getchar();</span><br><span class="line">	<span class="keyword">while</span> (<span class="built_in">isdigit</span>(ch)) x=x*<span class="number">10</span>+ch-<span class="string">'0'</span>,ch=getchar();</span><br><span class="line">	var=w?-x:x;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TreeArr</span>&#123;</span></span><br><span class="line">	LL T[<span class="number">100005</span>];</span><br><span class="line">	<span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">lowbit</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;<span class="keyword">return</span> x&amp;-x;&#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">AddNum</span><span class="params">(<span class="keyword">int</span> pos,<span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function">		</span>&#123;<span class="keyword">for</span> (;pos&lt;=N;pos+=lowbit(pos)) T[pos]+=x;&#125;</span><br><span class="line">	<span class="function"><span class="keyword">inline</span> LL <span class="title">Query</span><span class="params">(<span class="keyword">int</span> pos)</span></span></span><br><span class="line"><span class="function">	</span>&#123; LL ret=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span> (;pos;pos-=lowbit(pos))ret+=T[pos];</span><br><span class="line">		<span class="keyword">return</span> ret;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;Tr;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> uint <span class="title">xnor</span><span class="params">(LL a,LL b)</span> </span>&#123;<span class="keyword">return</span> ~(uint)((a&amp;<span class="number">4294967295u</span>)^(b&amp;<span class="number">4294967295u</span>));&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">GetID</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;<span class="keyword">return</span> (x+BlkSz<span class="number">-1</span>)/BlkSz;&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">ReBuild</span><span class="params">(<span class="keyword">int</span> Ind)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (Re i=L[Ind]; i&lt;L[Ind+<span class="number">1</span>]; ++i) Data[i]=<span class="built_in">std</span>::mp(W[i],<span class="number">1L</span>L*A[i]*W[i]);</span><br><span class="line">	sort(Data+L[Ind],Data+L[Ind+<span class="number">1</span>]); Sum[L[Ind]]=Data[L[Ind]].second;</span><br><span class="line">	<span class="keyword">for</span> (Re i=L[Ind]+<span class="number">1</span>; i&lt;L[Ind+<span class="number">1</span>]; ++i) Sum[i]=Sum[i<span class="number">-1</span>]+Data[i].second;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	read(N),read(Q); BlkSz=<span class="built_in">sqrt</span>(N),BlkNum=GetID(N);</span><br><span class="line">	<span class="keyword">for</span> (Re i=<span class="number">1</span>; i&lt;=N; ++i)	read(A[i]),Tr.AddNum(i,A[i]);</span><br><span class="line">	<span class="keyword">for</span> (Re i=<span class="number">1</span>; i&lt;=N; ++i)	read(W[i]); L[<span class="number">1</span>]=<span class="number">1</span>; L[BlkNum+<span class="number">1</span>]=N+<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span> (Re i=<span class="number">2</span>; i&lt;=BlkNum; ++i) L[i]=L[i<span class="number">-1</span>]+BlkSz;</span><br><span class="line">	<span class="keyword">for</span> (Re i=<span class="number">1</span>; i&lt;=BlkNum; ++i) ReBuild(i);</span><br><span class="line">	<span class="keyword">while</span> (Q--)</span><br><span class="line">	&#123; <span class="keyword">int</span> opt,l,r,k;</span><br><span class="line">		read(opt);</span><br><span class="line">		<span class="keyword">switch</span> (opt)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">case</span> <span class="number">1</span>: &#123;</span><br><span class="line">				LL S=<span class="number">0</span>;</span><br><span class="line">				read(l),read(r),read(k);</span><br><span class="line">				<span class="keyword">if</span> (GetID(l)!=GetID(r))</span><br><span class="line">				&#123;</span><br><span class="line">					<span class="keyword">for</span> (Re i=GetID(l)+<span class="number">1</span>; i&lt;=GetID(r)<span class="number">-1</span>; ++i)</span><br><span class="line">					&#123;</span><br><span class="line">						<span class="keyword">int</span> x=L[i],y=L[i+<span class="number">1</span>]<span class="number">-1</span>;</span><br><span class="line">						<span class="keyword">while</span> (x&lt;=y)</span><br><span class="line">						&#123;</span><br><span class="line">							<span class="keyword">int</span> mid=(x+y)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">							<span class="keyword">if</span> (Data[mid].first&gt;k) y=mid<span class="number">-1</span>;</span><br><span class="line">							<span class="keyword">else</span> x=mid+<span class="number">1</span>;</span><br><span class="line">						&#125; <span class="keyword">if</span> (y&gt;=L[i]) S+=Sum[y];</span><br><span class="line">					&#125;</span><br><span class="line">					<span class="keyword">for</span> (Re i=l; i&lt;L[GetID(l)+<span class="number">1</span>]; ++i)</span><br><span class="line">						<span class="keyword">if</span> (W[i]&lt;=k) S+=<span class="number">1L</span>L*A[i]*W[i];</span><br><span class="line">					<span class="keyword">for</span> (Re i=L[GetID(r)]; i&lt;=r; ++i)</span><br><span class="line">						<span class="keyword">if</span> (W[i]&lt;=k) S+=<span class="number">1L</span>L*A[i]*W[i];</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">else</span> <span class="keyword">for</span> (Re i=l; i&lt;=r; ++i) <span class="keyword">if</span> (W[i]&lt;=k) S+=<span class="number">1L</span>L*A[i]*W[i];</span><br><span class="line">				<span class="built_in">printf</span>(<span class="string">"%u\n"</span>,xnor(S,Tr.Query(r)-Tr.Query(l<span class="number">-1</span>)));</span><br><span class="line">			&#125; <span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">				read(l),read(k),Tr.AddNum(l,k-A[l]);</span><br><span class="line">				A[l]=k; ReBuild(GetID(l));</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">				read(l),read(k),W[l]=k;</span><br><span class="line">				ReBuild(GetID(l));</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/articles/HNOI2012-永无乡/" rel="next" title="[HNOI2012]永无乡">
+                <i class="fa fa-chevron-left"></i> [HNOI2012]永无乡
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="Alkri">
+            
+              <p class="site-author-name" itemprop="name">Alkri</p>
+              <p class="site-description motion-element" itemprop="description">QQ:1297977829</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">34</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/alkri" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Description"><span class="nav-number">1.</span> <span class="nav-text">Description</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Input-Format"><span class="nav-number">2.</span> <span class="nav-text">Input Format</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Output-Format"><span class="nav-number">3.</span> <span class="nav-text">Output Format</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Input-Sample"><span class="nav-number">4.</span> <span class="nav-text">Input Sample</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Output-Sample"><span class="nav-number">5.</span> <span class="nav-text">Output Sample</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hint"><span class="nav-number">6.</span> <span class="nav-text">Hint</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#题解"><span class="nav-number"></span> <span class="nav-text">题解</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Alkri</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.4.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.4.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <canvas class="fireworks" style="position:fixed;left:0;top:0;z-index:99999999;pointer-events:none;"></canvas>
+  <script type="text/javascript" src="https://www.k-xzy.xyz/assets/js/anime.min.js"></script>
+  <script type="text/javascript" src="https://www.k-xzy.xyz/assets/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":100,"height":200},"mobile":{"show":false},"log":false});</script></body>
+</html>
