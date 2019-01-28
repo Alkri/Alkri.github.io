@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.4.2" rel="stylesheet" type="text/css">
+
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.2">
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.4.2',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="最近写个工程的时候踩的大坑QAQ。。。">
+<meta name="keywords" content="Python3,经验">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Python3]关于桌面托盘和气泡QwQ">
+<meta property="og:url" content="http://alkri.github.com/articles/Python3-关于桌面托盘和气泡QwQ/index.html">
+<meta property="og:site_name" content="Alkri&#39;s Blog">
+<meta property="og:description" content="最近写个工程的时候踩的大坑QAQ。。。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-01-28T12:42:19.310Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[Python3]关于桌面托盘和气泡QwQ">
+<meta name="twitter:description" content="最近写个工程的时候踩的大坑QAQ。。。">
+
+
+
+
+
+
+  <link rel="canonical" href="http://alkri.github.com/articles/Python3-关于桌面托盘和气泡QwQ/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>[Python3]关于桌面托盘和气泡QwQ | Alkri's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Alkri's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">36</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">18</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-guestbook">
+    <a href="/guestbook/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-book"></i> <br>留言板</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://alkri.github.com/articles/Python3-关于桌面托盘和气泡QwQ/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Alkri">
+      <meta itemprop="description" content="QQ:1297977829">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alkri's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[Python3]关于桌面托盘和气泡QwQ
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-01-28 20:12:11 / 修改时间：20:42:19" itemprop="dateCreated datePublished" datetime="2019-01-28T20:12:11+08:00">2019-01-28</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近写个工程的时候踩的大坑QAQ。。。</p>
+<a id="more"></a>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>看了一下上次的更新时间，2018-11-06。。。</p>
+<p>这个Blog也算是荒了一阵子了（期末考啊我也很无奈啊。。。</p>
+<p>然后在我的好友mnihyc<del>骚扰</del>劝说下，打算继续更新Blog。（虽然他的Blog这段时间内崩了一回，数据都没了</p>
+<p>所以我也没啥好写的，就水一篇博客吧，嘻嘻。</p>
+<h3 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h3><p>关于这个Python的桌面托盘上的事，某度上基本没啥资料。。。</p>
+<p>其实我主要是因为Win10的气泡提醒看起来还不错，就懒得自己写个窗口了。</p>
+<p>然后我就一直找气泡提醒。。。。。。结果找到了下面两个（可用的</p>
+<h4 id="1-这是socrates大佬的，2012年更新的（还tm要依赖这个模块"><a href="#1-这是socrates大佬的，2012年更新的（还tm要依赖这个模块" class="headerlink" title="1. 这是socrates大佬的，2012年更新的（还tm要依赖这个模块"></a>1. 这是<a href="https://me.csdn.net/dyx1024" target="_blank" rel="noopener">socrates</a>大佬的，2012年更新的（还tm要依赖<a href="https://github.com/woodenbrick/gtkPopupNotify" target="_blank" rel="noopener">这个</a>模块</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">#gtkPopupNotify.py</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Copyright 2009 Daniel Woodhouse </span></span><br><span class="line"><span class="comment"># modified by NickCis 2010 http://github.com/NickCis/gtkPopupNotify</span></span><br><span class="line"><span class="comment"># Modifications:</span></span><br><span class="line"><span class="comment">#         Added: * Corner support (notifications can be displayed in all corners</span></span><br><span class="line"><span class="comment">#                * Use of gtk Stock items or pixbuf to render images in notifications</span></span><br><span class="line"><span class="comment">#                * Posibility of use fixed height</span></span><br><span class="line"><span class="comment">#                * Posibility of use image as background</span></span><br><span class="line"><span class="comment">#                * Not displaying over Windows taskbar(taken from emesene gpl v3)</span></span><br><span class="line"><span class="comment">#                * y separation.</span></span><br><span class="line"><span class="comment">#                * font description options</span></span><br><span class="line"><span class="comment">#                * Callbacks For left, middle and right click</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#This program is free software: you can redistribute it and/or modify</span></span><br><span class="line"><span class="comment">#it under the terms of the GNU Lesser General Public License as published by</span></span><br><span class="line"><span class="comment">#the Free Software Foundation, either version 3 of the License, or</span></span><br><span class="line"><span class="comment">#(at your option) any later version.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#This program is distributed in the hope that it will be useful,</span></span><br><span class="line"><span class="comment">#but WITHOUT ANY WARRANTY; without even the implied warranty of</span></span><br><span class="line"><span class="comment">#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span></span><br><span class="line"><span class="comment">#GNU Lesser General Public License for more details.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#You should have received a copy of the GNU Lesser General Public License</span></span><br><span class="line"><span class="comment">#along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> gtk</span><br><span class="line"><span class="keyword">import</span> pango</span><br><span class="line"><span class="keyword">import</span> gobject</span><br><span class="line"> </span><br><span class="line"><span class="comment"># This code is used only on Windows to get the location on the taskbar</span></span><br><span class="line"><span class="comment"># Taken from emesene Notifications (Gpl v3)</span></span><br><span class="line">taskbarOffsety = <span class="number">0</span></span><br><span class="line">taskbarOffsetx = <span class="number">0</span></span><br><span class="line"><span class="keyword">if</span> os.name == <span class="string">"nt"</span>:</span><br><span class="line">    <span class="keyword">import</span> ctypes</span><br><span class="line">    <span class="keyword">from</span> ctypes.wintypes <span class="keyword">import</span> RECT, DWORD</span><br><span class="line">    user = ctypes.windll.user32</span><br><span class="line">    MONITORINFOF_PRIMARY = <span class="number">1</span></span><br><span class="line">    HMONITOR = <span class="number">1</span></span><br><span class="line"> </span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">MONITORINFO</span><span class="params">(ctypes.Structure)</span>:</span></span><br><span class="line">        _fields_ = [</span><br><span class="line">            (<span class="string">'cbSize'</span>, DWORD),</span><br><span class="line">            (<span class="string">'rcMonitor'</span>, RECT),</span><br><span class="line">            (<span class="string">'rcWork'</span>, RECT),</span><br><span class="line">            (<span class="string">'dwFlags'</span>, DWORD)</span><br><span class="line">            ]</span><br><span class="line"> </span><br><span class="line">    taskbarSide = <span class="string">"bottom"</span></span><br><span class="line">    taskbarOffset = <span class="number">30</span></span><br><span class="line">    info = MONITORINFO()</span><br><span class="line">    info.cbSize = ctypes.sizeof(info)</span><br><span class="line">    info.dwFlags =  MONITORINFOF_PRIMARY</span><br><span class="line">    user.GetMonitorInfoW(HMONITOR, ctypes.byref(info))</span><br><span class="line">    <span class="keyword">if</span> info.rcMonitor.bottom != info.rcWork.bottom:</span><br><span class="line">        taskbarOffsety = info.rcMonitor.bottom - info.rcWork.bottom</span><br><span class="line">    <span class="keyword">if</span> info.rcMonitor.top != info.rcWork.top:</span><br><span class="line">        taskbarSide = <span class="string">"top"</span></span><br><span class="line">        taskbarOffsety = info.rcWork.top - info.rcMonitor.top</span><br><span class="line">    <span class="keyword">if</span> info.rcMonitor.left != info.rcWork.left:</span><br><span class="line">        taskbarSide = <span class="string">"left"</span></span><br><span class="line">        taskbarOffsetx = info.rcWork.left - info.rcMonitor.left</span><br><span class="line">    <span class="keyword">if</span> info.rcMonitor.right != info.rcWork.right:</span><br><span class="line">        taskbarSide = <span class="string">"right"</span></span><br><span class="line">        taskbarOffsetx = info.rcMonitor.right - info.rcWork.right</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NotificationStack</span>:</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, size_x=<span class="number">300</span>, size_y=<span class="number">-1</span>, timeout=<span class="number">5</span>, corner=<span class="params">(False, False)</span>, sep_y=<span class="number">0</span>)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Create a new notification stack.  The recommended way to create Popup instances.</span></span><br><span class="line"><span class="string">          Parameters:</span></span><br><span class="line"><span class="string">            `size_x` : The desired width of the notifications.</span></span><br><span class="line"><span class="string">            `size_y` : The desired minimum height of the notifications. If it isn't set,</span></span><br><span class="line"><span class="string">            or setted to None, the size will automatically adjust</span></span><br><span class="line"><span class="string">            `timeout` : Popup instance will disappear after this timeout if there</span></span><br><span class="line"><span class="string">            is no human intervention. This can be overridden temporarily by passing</span></span><br><span class="line"><span class="string">            a new timout to the new_popup method.</span></span><br><span class="line"><span class="string">            `coner` : 2 Value tuple: (true if left, True if top)</span></span><br><span class="line"><span class="string">            `sep_y` : y distance to separate notifications from each other</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self.size_x = size_x</span><br><span class="line">        self.size_y = <span class="number">-1</span> </span><br><span class="line">        <span class="keyword">if</span> (size_y == <span class="keyword">None</span>): </span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">             size_y</span><br><span class="line">        self.timeout = timeout</span><br><span class="line">        self.corner = corner</span><br><span class="line">        self.sep_y = sep_y</span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Other parameters:</span></span><br><span class="line"><span class="string">        These will take effect for every popup created after the change.</span></span><br><span class="line"><span class="string">            </span></span><br><span class="line"><span class="string">            `edge_offset_y` : distance from the bottom of the screen and</span></span><br><span class="line"><span class="string">            the bottom of the stack.</span></span><br><span class="line"><span class="string">            `edge_offset_x` : distance from the right edge of the screen and</span></span><br><span class="line"><span class="string">            the side of the stack.</span></span><br><span class="line"><span class="string">            `max_popups` : The maximum number of popups to be shown on the screen</span></span><br><span class="line"><span class="string">            at one time.</span></span><br><span class="line"><span class="string">            `bg_color` : if None default is used (usually grey). set with a gtk.gdk.Color.</span></span><br><span class="line"><span class="string">            `bg_pixmap` : Pixmap to use as background of notification. You can set a gtk.gdk.Pixmap</span></span><br><span class="line"><span class="string">            or a path to a image. If none, the color background will be displayed.</span></span><br><span class="line"><span class="string">            `bg_mask` : If a gtk.gdk.pixmap is specified under bg_pixmap, the mask of the pixmap has to be setted here.</span></span><br><span class="line"><span class="string">            `fg_color` : if None default is used (usually black). set with a gtk.gdk.Color.</span></span><br><span class="line"><span class="string">            `show_timeout` : if True, a countdown till destruction will be displayed.</span></span><br><span class="line"><span class="string">            `close_but` : if True, the close button will be displayed.</span></span><br><span class="line"><span class="string">            `fontdesc` : a 3 value Tuple containing the pango.FontDescriptions of the Header, message and counter</span></span><br><span class="line"><span class="string">             (in that order). If a string is suplyed, it will be used for the 3 the same FontDescription.</span></span><br><span class="line"><span class="string">             http://doc.stoq.com.br/devel/pygtk/class-pangofontdescription.html</span></span><br><span class="line"><span class="string">        """</span>        </span><br><span class="line">        self.edge_offset_x = <span class="number">0</span></span><br><span class="line">        self.edge_offset_y = <span class="number">0</span></span><br><span class="line">        self.max_popups = <span class="number">5</span></span><br><span class="line">        self.fg_color = <span class="keyword">None</span></span><br><span class="line">        self.bg_color = <span class="keyword">None</span></span><br><span class="line">        self.bg_pixmap = <span class="keyword">None</span></span><br><span class="line">        self.bg_mask = <span class="keyword">None</span></span><br><span class="line">        self.show_timeout = <span class="keyword">False</span></span><br><span class="line">        self.close_but = <span class="keyword">True</span></span><br><span class="line">        self.fontdesc = (<span class="string">"Sans Bold 14"</span>, <span class="string">"Sans 12"</span>, <span class="string">"Sans 10"</span>)</span><br><span class="line">        </span><br><span class="line">        self._notify_stack = []</span><br><span class="line">        self._offset = <span class="number">0</span></span><br><span class="line"> </span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">new_popup</span><span class="params">(self, title, message, image=None, leftCb=None, middleCb=None, rightCb=None)</span>:</span></span><br><span class="line">        <span class="string">"""Create a new Popup instance."""</span></span><br><span class="line">        <span class="keyword">if</span> len(self._notify_stack) == self.max_popups:</span><br><span class="line">            self._notify_stack[<span class="number">0</span>].hide_notification()</span><br><span class="line">        self._notify_stack.append(Popup(self, title, message, image, leftCb, middleCb, rightCb))</span><br><span class="line">        self._offset += self._notify_stack[<span class="number">-1</span>].y</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">destroy_popup_cb</span><span class="params">(self, popup)</span>:</span></span><br><span class="line">        self._notify_stack.remove(popup)</span><br><span class="line">        <span class="comment">#move popups down if required</span></span><br><span class="line">        offset = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> note <span class="keyword">in</span> self._notify_stack:</span><br><span class="line">            offset = note.reposition(offset, self)</span><br><span class="line">        self._offset = offset</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"> </span><br><span class="line">    </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Popup</span><span class="params">(gtk.Window)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, stack, title, message, image, leftCb, middleCb, rightCb)</span>:</span></span><br><span class="line">        gtk.Window.__init__(self, type=gtk.WINDOW_POPUP)</span><br><span class="line">        </span><br><span class="line">        self.leftclickCB = leftCb</span><br><span class="line">        self.middleclickCB = middleCb</span><br><span class="line">        self.rightclickCB = rightCb        </span><br><span class="line">        </span><br><span class="line">        self.set_size_request(stack.size_x, stack.size_y)</span><br><span class="line">        self.set_decorated(<span class="keyword">False</span>)</span><br><span class="line">        self.set_deletable(<span class="keyword">False</span>)</span><br><span class="line">        self.set_property(<span class="string">"skip-pager-hint"</span>, <span class="keyword">True</span>)</span><br><span class="line">        self.set_property(<span class="string">"skip-taskbar-hint"</span>, <span class="keyword">True</span>)</span><br><span class="line">        self.connect(<span class="string">"enter-notify-event"</span>, self.on_hover, <span class="keyword">True</span>)</span><br><span class="line">        self.connect(<span class="string">"leave-notify-event"</span>, self.on_hover, <span class="keyword">False</span>)</span><br><span class="line">        self.set_opacity(<span class="number">0.2</span>)</span><br><span class="line">        self.destroy_cb = stack.destroy_popup_cb</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> type(stack.fontdesc) == tuple <span class="keyword">or</span> type(stack.fontdesc) == list:</span><br><span class="line">            fontH, fontM, fontC = stack.fontdesc</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            fontH = fontM = fontC = stack.fontdesc</span><br><span class="line">        </span><br><span class="line">        main_box = gtk.VBox()</span><br><span class="line">        header_box = gtk.HBox()</span><br><span class="line">        self.header = gtk.Label()</span><br><span class="line">        self.header.set_markup(<span class="string">"&lt;b&gt;%s&lt;/b&gt;"</span> % title)</span><br><span class="line">        self.header.set_padding(<span class="number">3</span>, <span class="number">3</span>)</span><br><span class="line">        self.header.set_alignment(<span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            self.header.modify_font(pango.FontDescription(fontH))</span><br><span class="line">        <span class="keyword">except</span> Exception, e:</span><br><span class="line">            <span class="keyword">print</span> e</span><br><span class="line">        header_box.pack_start(self.header, <span class="keyword">True</span>, <span class="keyword">True</span>, <span class="number">5</span>)</span><br><span class="line">        <span class="keyword">if</span> stack.close_but:</span><br><span class="line">            close_button = gtk.Image()</span><br><span class="line">        </span><br><span class="line">            close_button.set_from_stock(gtk.STOCK_CANCEL, gtk.ICON_SIZE_BUTTON)</span><br><span class="line">            close_button.set_padding(<span class="number">3</span>, <span class="number">3</span>)</span><br><span class="line">            close_window = gtk.EventBox()</span><br><span class="line">            close_window.set_visible_window(<span class="keyword">False</span>)</span><br><span class="line">            close_window.connect(<span class="string">"button-press-event"</span>, self.hide_notification)</span><br><span class="line">            close_window.add(close_button)</span><br><span class="line">            header_box.pack_end(close_window, <span class="keyword">False</span>, <span class="keyword">False</span>)</span><br><span class="line">        main_box.pack_start(header_box)</span><br><span class="line">        </span><br><span class="line">        body_box = gtk.HBox()</span><br><span class="line">        <span class="keyword">if</span> image <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">            self.image = gtk.Image()</span><br><span class="line">            self.image.set_size_request(<span class="number">70</span>, <span class="number">70</span>)</span><br><span class="line">            self.image.set_alignment(<span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">if</span> image <span class="keyword">in</span> gtk.stock_list_ids():</span><br><span class="line">                self.image.set_from_stock(image, gtk.ICON_SIZE_DIALOG)</span><br><span class="line">            <span class="keyword">elif</span> type(image) == gtk.gdk.Pixbuf:</span><br><span class="line">                self.image.set_from_pixbuf(image)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                self.image.set_from_file(image)</span><br><span class="line">            body_box.pack_start(self.image, <span class="keyword">False</span>, <span class="keyword">False</span>, <span class="number">5</span>)</span><br><span class="line">        self.message = gtk.Label()</span><br><span class="line">        self.message.set_property(<span class="string">"wrap"</span>, <span class="keyword">True</span>)</span><br><span class="line">        self.message.set_size_request(stack.size_x - <span class="number">90</span>, <span class="number">-1</span>)</span><br><span class="line">        self.message.set_alignment(<span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">        self.message.set_padding(<span class="number">5</span>, <span class="number">10</span>)</span><br><span class="line">        self.message.set_markup(message)</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            self.message.modify_font(pango.FontDescription(fontM))</span><br><span class="line">        <span class="keyword">except</span> Exception, e:</span><br><span class="line">            <span class="keyword">print</span> e</span><br><span class="line">        self.counter = gtk.Label()</span><br><span class="line">        self.counter.set_alignment(<span class="number">1</span>, <span class="number">1</span>)</span><br><span class="line">        self.counter.set_padding(<span class="number">3</span>, <span class="number">3</span>)</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            self.counter.modify_font(pango.FontDescription(fontC))</span><br><span class="line">        <span class="keyword">except</span> Exception, e:</span><br><span class="line">            <span class="keyword">print</span> e</span><br><span class="line">        self.timeout = stack.timeout</span><br><span class="line">        </span><br><span class="line">        body_box.pack_start(self.message, <span class="keyword">True</span>, <span class="keyword">False</span>, <span class="number">5</span>)</span><br><span class="line">        body_box.pack_end(self.counter, <span class="keyword">False</span>, <span class="keyword">False</span>, <span class="number">5</span>)</span><br><span class="line">        main_box.pack_start(body_box)</span><br><span class="line">        eventbox = gtk.EventBox()</span><br><span class="line">        eventbox.set_property(<span class="string">'visible-window'</span>, <span class="keyword">False</span>)</span><br><span class="line">        eventbox.set_events(gtk.gdk.BUTTON_PRESS_MASK)</span><br><span class="line">        eventbox.connect(<span class="string">"button_press_event"</span>, self.onClick)  </span><br><span class="line">        eventbox.add(main_box)</span><br><span class="line">        self.add(eventbox)</span><br><span class="line">        <span class="keyword">if</span> stack.bg_pixmap <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> type(stack.bg_pixmap) == gtk.gdk.Pixmap:</span><br><span class="line">                stack.bg_pixmap, stack.bg_mask = gtk.gdk.pixbuf_new_from_file(stack.bg_pixmap).render_pixmap_and_mask()</span><br><span class="line">            self.set_app_paintable(<span class="keyword">True</span>)</span><br><span class="line">            self.connect_after(<span class="string">"realize"</span>, self.callbackrealize, stack.bg_pixmap, stack.bg_mask)</span><br><span class="line">        <span class="keyword">elif</span> stack.bg_color <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">            self.modify_bg(gtk.STATE_NORMAL, stack.bg_color)</span><br><span class="line">        <span class="keyword">if</span> stack.fg_color <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">            self.message.modify_fg(gtk.STATE_NORMAL, stack.fg_color)</span><br><span class="line">            self.header.modify_fg(gtk.STATE_NORMAL, stack.fg_color)</span><br><span class="line">            self.counter.modify_fg(gtk.STATE_NORMAL, stack.fg_color)</span><br><span class="line">        self.show_timeout = stack.show_timeout</span><br><span class="line">        self.hover = <span class="keyword">False</span></span><br><span class="line">        self.show_all()</span><br><span class="line">        self.x, self.y = self.size_request()</span><br><span class="line">        <span class="comment">#Not displaying over windows bar </span></span><br><span class="line">        <span class="keyword">if</span> os.name == <span class="string">'nt'</span>:</span><br><span class="line">            <span class="keyword">if</span> stack.corner[<span class="number">0</span>] <span class="keyword">and</span> taskbarSide == <span class="string">"left"</span>:</span><br><span class="line">                stack.edge_offset_x += taskbarOffsetx</span><br><span class="line">            <span class="keyword">elif</span> <span class="keyword">not</span> stack.corner[<span class="number">0</span>] <span class="keyword">and</span> taskbarSide == <span class="string">'right'</span>:</span><br><span class="line">                stack.edge_offset_x += taskbarOffsetx</span><br><span class="line">            <span class="keyword">if</span> stack.corner[<span class="number">1</span>] <span class="keyword">and</span> taskbarSide == <span class="string">"top"</span>:</span><br><span class="line">                stack.edge_offset_x += taskbarOffsety</span><br><span class="line">            <span class="keyword">elif</span> <span class="keyword">not</span> stack.corner[<span class="number">1</span>] <span class="keyword">and</span> taskbarSide == <span class="string">'bottom'</span>:</span><br><span class="line">                stack.edge_offset_x += taskbarOffsety</span><br><span class="line">                </span><br><span class="line">        <span class="keyword">if</span> stack.corner[<span class="number">0</span>]:</span><br><span class="line">            posx = stack.edge_offset_x</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            posx = gtk.gdk.screen_width() - self.x - stack.edge_offset_x</span><br><span class="line">        sep_y = <span class="number">0</span> </span><br><span class="line">        <span class="keyword">if</span> (stack._offset == <span class="number">0</span>):</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">             stack.sep_y</span><br><span class="line">        self.y += sep_y</span><br><span class="line">        <span class="keyword">if</span> stack.corner[<span class="number">1</span>]:</span><br><span class="line">            posy = stack._offset + stack.edge_offset_y + sep_y</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            posy = gtk.gdk.screen_height()- self.y - stack._offset - stack.edge_offset_y</span><br><span class="line">        self.move(posx, posy)</span><br><span class="line">        self.fade_in_timer = gobject.timeout_add(<span class="number">100</span>, self.fade_in)</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">reposition</span><span class="params">(self, offset, stack)</span>:</span></span><br><span class="line">        <span class="string">"""Move the notification window down, when an older notification is removed"""</span></span><br><span class="line">        <span class="keyword">if</span> stack.corner[<span class="number">0</span>]:</span><br><span class="line">            posx = stack.edge_offset_x</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            posx = gtk.gdk.screen_width() - self.x - stack.edge_offset_x</span><br><span class="line">        <span class="keyword">if</span> stack.corner[<span class="number">1</span>]:</span><br><span class="line">            posy = offset + stack.edge_offset_y</span><br><span class="line">            new_offset = self.y + offset</span><br><span class="line">        <span class="keyword">else</span>:            </span><br><span class="line">            new_offset = self.y + offset</span><br><span class="line">            posy = gtk.gdk.screen_height() - new_offset - stack.edge_offset_y + stack.sep_y</span><br><span class="line">        self.move(posx, posy)</span><br><span class="line">        <span class="keyword">return</span> new_offset</span><br><span class="line"> </span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">fade_in</span><span class="params">(self)</span>:</span></span><br><span class="line">        opacity = self.get_opacity()</span><br><span class="line">        opacity += <span class="number">0.15</span></span><br><span class="line">        <span class="keyword">if</span> opacity &gt;= <span class="number">1</span>:</span><br><span class="line">            self.wait_timer = gobject.timeout_add(<span class="number">1000</span>, self.wait)</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">        self.set_opacity(opacity)</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">            </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wait</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self.hover:</span><br><span class="line">            self.timeout -= <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> self.show_timeout:</span><br><span class="line">            self.counter.set_markup(str(<span class="string">"&lt;b&gt;%s&lt;/b&gt;"</span> % self.timeout))</span><br><span class="line">        <span class="keyword">if</span> self.timeout == <span class="number">0</span>:</span><br><span class="line">            self.fade_out_timer = gobject.timeout_add(<span class="number">100</span>, self.fade_out)</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">      </span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">fade_out</span><span class="params">(self)</span>:</span></span><br><span class="line">        opacity = self.get_opacity()</span><br><span class="line">        opacity -= <span class="number">0.10</span></span><br><span class="line">        <span class="keyword">if</span> opacity &lt;= <span class="number">0</span>:</span><br><span class="line">            self.in_progress = <span class="keyword">False</span></span><br><span class="line">            self.hide_notification()</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">        self.set_opacity(opacity)</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">on_hover</span><span class="params">(self, window, event, hover)</span>:</span></span><br><span class="line">        <span class="string">"""Starts/Stops the notification timer on a mouse in/out event"""</span></span><br><span class="line">        self.hover = hover</span><br><span class="line"> </span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">hide_notification</span><span class="params">(self, *args)</span>:</span></span><br><span class="line">        <span class="string">"""Destroys the notification and tells the stack to move the</span></span><br><span class="line"><span class="string">        remaining notification windows"""</span></span><br><span class="line">        <span class="keyword">for</span> timer <span class="keyword">in</span> (<span class="string">"fade_in_timer"</span>, <span class="string">"fade_out_timer"</span>, <span class="string">"wait_timer"</span>):</span><br><span class="line">            <span class="keyword">if</span> hasattr(self, timer):</span><br><span class="line">                gobject.source_remove(getattr(self, timer))</span><br><span class="line">        self.destroy()</span><br><span class="line">        self.destroy_cb(self)</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">callbackrealize</span><span class="params">(self, widget, pixmap, mask=False)</span>:</span></span><br><span class="line">        <span class="comment">#width, height = pixmap.get_size()</span></span><br><span class="line">        <span class="comment">#self.resize(width, height)</span></span><br><span class="line">        <span class="keyword">if</span> mask <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">False</span>:</span><br><span class="line">            self.shape_combine_mask(mask, <span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">        self.window.set_back_pixmap(pixmap, <span class="keyword">False</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">onClick</span><span class="params">(self, widget, event)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> event.button == <span class="number">1</span> <span class="keyword">and</span> self.leftclickCB != <span class="keyword">None</span>:</span><br><span class="line">            self.leftclickCB()</span><br><span class="line">            self.hide_notification()</span><br><span class="line">        <span class="keyword">if</span> event.button == <span class="number">2</span> <span class="keyword">and</span> self.middleclickCB != <span class="keyword">None</span>:</span><br><span class="line">            self.middleclickCB()</span><br><span class="line">            self.hide_notification()</span><br><span class="line">        <span class="keyword">if</span> event.button == <span class="number">3</span> <span class="keyword">and</span> self.rightclickCB != <span class="keyword">None</span>:</span><br><span class="line">            self.rightclickCB()</span><br><span class="line">            self.hide_notification()</span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    <span class="comment">#example usage</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">notify_factory</span><span class="params">()</span>:</span></span><br><span class="line">        color = (<span class="string">"green"</span>, <span class="string">"blue"</span>)</span><br><span class="line">        image = <span class="string">"logo1_64.png"</span></span><br><span class="line">        notifier.bg_color = gtk.gdk.Color(color[<span class="number">0</span>])</span><br><span class="line">        notifier.fg_color = gtk.gdk.Color(color[<span class="number">1</span>])</span><br><span class="line">        notifier.show_timeout = <span class="keyword">True</span> </span><br><span class="line">        notifier.edge_offset_x = <span class="number">20</span></span><br><span class="line">        notifier.edge_offset_y = <span class="number">30</span></span><br><span class="line">        notifier.new_popup(<span class="string">"Windows上的泡泡提示"</span>, <span class="string">"NND，比Linux下复杂多了，效果还不怎么样"</span>, image=image)</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">gtk_main_quit</span><span class="params">()</span>:</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">"quitting"</span></span><br><span class="line">        gtk.main_quit()</span><br><span class="line">    </span><br><span class="line">    notifier = NotificationStack(timeout=<span class="number">1</span>) </span><br><span class="line">    gobject.timeout_add(<span class="number">4000</span>, notify_factory)</span><br><span class="line">    gobject.timeout_add(<span class="number">8000</span>, gtk_main_quit)</span><br><span class="line">    gtk.main()</span><br></pre></td></tr></table></figure>
+<p>这个我不知道能不能用（反正这个不是Python3的</p>
+<p>不过好像用的也不是Win10下原汁原味的提示。。。</p>
+<h4 id="2-emmm我不知道扔哪里去了"><a href="#2-emmm我不知道扔哪里去了" class="headerlink" title="2.emmm我不知道扔哪里去了"></a>2.emmm我不知道扔哪里去了</h4><p>至少这个可以用，是利用Python3调用winAPI</p>
+<p>然后瞎搞搞。。。。（反正我是觉得太麻烦了啊</p>
+<h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><p>最后，我想到了我的wxPython是不是有这样的功能</p>
+<p>然后百度了一下</p>
+<p>找到了这个j*玩意，居然是wxPython+winAPI的？？？</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> wx</span><br><span class="line"><span class="keyword">import</span> win32gui   </span><br><span class="line"><span class="keyword">import</span> win32con   </span><br><span class="line"><span class="keyword">import</span> time   </span><br><span class="line"><span class="keyword">from</span> winxpgui <span class="keyword">import</span> *</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SparkTaskBarIcon</span><span class="params">(wx.TaskBarIcon)</span>:</span></span><br><span class="line">    TBMENU_RESTORE = wx.NewId()</span><br><span class="line">    TBMENU_CLOSE   = wx.NewId()</span><br><span class="line">    TBMENU_CHANGE  = wx.NewId()</span><br><span class="line">    TBMENU_REMOVE  = wx.NewId()</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, frame,picon,icon)</span>:</span></span><br><span class="line">        wx.TaskBarIcon.__init__(self)</span><br><span class="line">        self.frame = frame</span><br><span class="line">        <span class="comment"># Set the image</span></span><br><span class="line">        <span class="comment">#icon = self.MakeIcon(images.WXPdemo.GetImage())</span></span><br><span class="line">        wc = win32gui.WNDCLASS()   </span><br><span class="line">        hinst = wc.hInstance = win32gui.GetModuleHandle(<span class="keyword">None</span>)  </span><br><span class="line">        icon_flags = win32con.LR_LOADFROMFILE | win32con.LR_DEFAULTSIZE</span><br><span class="line">        hicon = LoadImage(hinst, icon, win32con.IMAGE_ICON, <span class="number">0</span>, <span class="number">0</span>, icon_flags)</span><br><span class="line">               </span><br><span class="line">        self.SetIcon(picon, <span class="string">"Spark"</span>)</span><br><span class="line">        self.imgidx = <span class="number">1</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment"># bind some events</span></span><br><span class="line">        self.Bind(wx.EVT_TASKBAR_LEFT_DCLICK, self.OnTaskBarActivate)</span><br><span class="line">        self.Bind(wx.EVT_MENU, self.OnTaskBarActivate, id=self.TBMENU_RESTORE)</span><br><span class="line">        self.Bind(wx.EVT_MENU, self.OnTaskBarClose, id=self.TBMENU_CLOSE)</span><br><span class="line">        <span class="comment">#self.Bind(wx.EVT_MENU, self.OnTaskBarChange, id=self.TBMENU_CHANGE)</span></span><br><span class="line">        self.Bind(wx.EVT_MENU, self.OnTaskBarRemove, id=self.TBMENU_REMOVE)</span><br><span class="line">        </span><br><span class="line">        <span class="comment">#气泡提示注册win的窗口消息</span></span><br><span class="line">        wc.lpszClassName = <span class="string">"Spark"</span>  </span><br><span class="line">        wc.lpfnWndProc = &#123;win32con.WM_DESTROY: self.OnDestroy,&#125;   </span><br><span class="line">        classAtom = win32gui.RegisterClass(wc)   </span><br><span class="line">        style = win32con.WS_OVERLAPPED | win32con.WS_SYSMENU   </span><br><span class="line">        self.hwnd = win32gui.CreateWindow( classAtom, <span class="string">"Spark"</span>, style,   </span><br><span class="line">                <span class="number">0</span>, <span class="number">0</span>, win32con.CW_USEDEFAULT, win32con.CW_USEDEFAULT,   </span><br><span class="line">                <span class="number">0</span>, <span class="number">0</span>, hinst, <span class="keyword">None</span>)   </span><br><span class="line">        <span class="comment">#hicon = win32gui.LoadIcon(0, win32con.IDI_APPLICATION)   </span></span><br><span class="line">        nid = (self.hwnd, <span class="number">0</span>, win32gui.NIF_ICON, win32con.WM_USER+<span class="number">20</span>, hicon, <span class="string">"Spark"</span>)   </span><br><span class="line">        win32gui.Shell_NotifyIcon(win32gui.NIM_ADD, nid)   </span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">OnDestroy</span><span class="params">(self, hwnd, msg, wparam, lparam)</span>:</span>   </span><br><span class="line">        nid = (self.hwnd, <span class="number">0</span>)   </span><br><span class="line">        win32gui.Shell_NotifyIcon(win32gui.NIM_DELETE, nid)   </span><br><span class="line">        win32gui.PostQuitMessage(<span class="number">0</span>) <span class="comment"># Terminate the app. </span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">showMsg</span><span class="params">(self, title, msg)</span>:</span>   </span><br><span class="line">        <span class="comment"># 原作者使用Shell_NotifyIconA方法代替包装后的Shell_NotifyIcon方法   </span></span><br><span class="line">        <span class="comment"># 据称是不能win32gui structure, 我稀里糊涂搞出来了.   </span></span><br><span class="line">        <span class="comment"># 具体对比原代码.   </span></span><br><span class="line">        nid = (self.hwnd, <span class="comment"># 句柄   </span></span><br><span class="line">                <span class="number">0</span>, <span class="comment"># 托盘图标ID   </span></span><br><span class="line">                win32gui.NIF_INFO, <span class="comment"># 标识   </span></span><br><span class="line">                <span class="number">0</span>, <span class="comment"># 回调消息ID   </span></span><br><span class="line">                <span class="number">0</span>, <span class="comment"># 托盘图标句柄   </span></span><br><span class="line">                <span class="string">"Spark Message"</span>, <span class="comment"># 图标字符串   </span></span><br><span class="line">                msg, <span class="comment"># 气球提示字符串   </span></span><br><span class="line">                <span class="number">5</span>, <span class="comment"># 提示的显示时间   </span></span><br><span class="line">                title, <span class="comment"># 提示标题   </span></span><br><span class="line">                win32gui.NIIF_INFO <span class="comment"># 提示用到的图标   </span></span><br><span class="line">                )   </span><br><span class="line">        win32gui.Shell_NotifyIcon(win32gui.NIM_MODIFY, nid)  </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">CreatePopupMenu</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        This method is called by the base class when it needs to popup</span></span><br><span class="line"><span class="string">        the menu for the default EVT_RIGHT_DOWN event.  Just create</span></span><br><span class="line"><span class="string">        the menu how you want it and return it from this function,</span></span><br><span class="line"><span class="string">        the base class takes care of the rest.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        menu = wx.Menu()</span><br><span class="line">        menu.Append(self.TBMENU_RESTORE, <span class="string">"Restore spark"</span>)</span><br><span class="line">        menu.Append(self.TBMENU_CLOSE,   <span class="string">"Close spark"</span>)</span><br><span class="line">        menu.AppendSeparator()</span><br><span class="line">        <span class="comment">#menu.Append(self.TBMENU_CHANGE, "Change the TB Icon")</span></span><br><span class="line">        menu.Append(self.TBMENU_REMOVE, <span class="string">"Remove Spark"</span>)</span><br><span class="line">        <span class="keyword">return</span> menu</span><br><span class="line"></span><br><span class="line">    <span class="comment">#def MakeIcon(self, img):</span></span><br><span class="line">        <span class="comment">#"""</span></span><br><span class="line">        <span class="comment">#The various platforms have different requirements for the</span></span><br><span class="line">        <span class="comment">#icon size...</span></span><br><span class="line">        <span class="comment">#"""</span></span><br><span class="line">        <span class="comment">#if "wxMSW" in wx.PlatformInfo:</span></span><br><span class="line">            <span class="comment">#img = img.Scale(16, 16)</span></span><br><span class="line">        <span class="comment">#elif "wxGTK" in wx.PlatformInfo:</span></span><br><span class="line">            <span class="comment">#img = img.Scale(22, 22)</span></span><br><span class="line">        <span class="comment">## wxMac can be any size upto 128x128, so leave the source img alone....</span></span><br><span class="line">        <span class="comment">#icon = wx.IconFromBitmap(img.ConvertToBitmap() )</span></span><br><span class="line">        <span class="comment">#return icon</span></span><br><span class="line">   </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">OnTaskBarActivate</span><span class="params">(self, evt)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> self.frame.IsIconized():</span><br><span class="line">            self.frame.Iconize(<span class="keyword">False</span>)</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self.frame.IsShown():</span><br><span class="line">            self.frame.Show(<span class="keyword">True</span>)</span><br><span class="line">        self.frame.Raise()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">OnTaskBarClose</span><span class="params">(self, evt)</span>:</span></span><br><span class="line">        wx.CallAfter(self.frame.OnClose)</span><br><span class="line"></span><br><span class="line">    <span class="comment">#def OnTaskBarChange(self, evt):</span></span><br><span class="line">        <span class="comment">#names = [ "WXPdemo", "Mondrian", "Pencil", "Carrot" ]                  </span></span><br><span class="line">        <span class="comment">#name = names[self.imgidx]</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">#eImg = getattr(images, name)</span></span><br><span class="line">        <span class="comment">#self.imgidx += 1</span></span><br><span class="line">        <span class="comment">#if self.imgidx &gt;= len(names):</span></span><br><span class="line">            <span class="comment">#self.imgidx = 0</span></span><br><span class="line">            </span><br><span class="line">        <span class="comment">#icon = self.MakeIcon(eImg.Image)</span></span><br><span class="line">        <span class="comment">#self.SetIcon(icon, "This is a new icon: " + name)</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">OnTaskBarRemove</span><span class="params">(self, evt)</span>:</span></span><br><span class="line">        self.RemoveIcon()</span><br></pre></td></tr></table></figure>
+<p>不过至少是实现了这一功能</p>
+<p><strong>但是英明的我怎么会满足于此呢？</strong>（我tm写个气泡提示就要这么长真的难受。。。。</p>
+<p>于是我开开心心地Google了一下，居然还是没有？？？？</p>
+<p>但是，我在一篇用winAPI解决的Blog里看到了这个</p>
+<blockquote>
+<p>有一个小需求希望在wx下建立的托盘区图标上显示气球消息,很尴尬的是wx.TaskBarIcon不像wx.Window等有GetHandle方法,无法直接获得句柄.解决的办法1.自己重写TaskBarIcon… 2.直接遍历找到句柄(更通用麻烦些).据说wxpython在2.9后会加一个wx.NotificationMessage方法,但是2.9….哪年月有动静呢?</p>
+</blockquote>
+<p>哇这个<code>wx.NotificationMessage</code>是个什么东西</p>
+<p>然后看了看wxPython官网，都TM<strong>4.0.4</strong>了，你这什么LJ版本。</p>
+<p>于是我终于在官方文档里找到了这个东西。。。</p>
+<p>（居然还是<code>wx.adv</code>模块里的。。。</p>
+<p>调用方法简单来写就是</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wx.adv.NotificationMessage(title,message).Show()</span><br></pre></td></tr></table></figure>
+<p>至少用一句话代替了上面那坨100+行的winAPI</p>
+<p>具体方法的话请<a href="https://docs.wxpython.org/wx.adv.NotificationMessage.html#wx.adv.NotificationMessage" target="_blank" rel="noopener">Click</a></p>
+<h3 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h3><p>不过这个东西还是不能完美的实现这个功能，他在通知的时候就会在托盘里加一个Python的图标。。。</p>
+<p>这个东西我也没啥好办法，将就用着吧，如果你有什么方法可以解决（别TM说winAPI），请email我！</p>
+<p>（这个东西耗了我1个小时，我……QAQ</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python3/" rel="tag"><i class="fa fa-tag"></i> Python3</a>
+          
+            <a href="/tags/经验/" rel="tag"><i class="fa fa-tag"></i> 经验</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/articles/NOIP2018模拟-挑战书/" rel="next" title="[NOIP2018模拟]挑战书">
+                <i class="fa fa-chevron-left"></i> [NOIP2018模拟]挑战书
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div id="gitalk-container"></div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="Alkri">
+            
+              <p class="site-author-name" itemprop="name">Alkri</p>
+              <p class="site-description motion-element" itemprop="description">QQ:1297977829</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">18</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">36</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/alkri" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正文"><span class="nav-number">2.</span> <span class="nav-text">正文</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-这是socrates大佬的，2012年更新的（还tm要依赖这个模块"><span class="nav-number">2.1.</span> <span class="nav-text">1. 这是socrates大佬的，2012年更新的（还tm要依赖这个模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-emmm我不知道扔哪里去了"><span class="nav-number">2.2.</span> <span class="nav-text">2.emmm我不知道扔哪里去了</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解决方案"><span class="nav-number">2.3.</span> <span class="nav-text">解决方案</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后记"><span class="nav-number">3.</span> <span class="nav-text">后记</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Alkri</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.4.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.4.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: '44b1934b52a3c9a95193',
+          clientSecret: '9a3f877f50d056918cb84f18024464b8b6816acd',
+          repo: 'Alkri.github.io',
+          owner: 'Alkri',
+          admin: ['Alkri'],
+          id: '1548677531000',
+          distractionFreeMode: 'true'
+        })
+        gitalk.render('gitalk-container')
+       </script>
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <canvas class="fireworks" style="position:fixed;left:0;top:0;z-index:99999999;pointer-events:none;"></canvas>
+  <script type="text/javascript" src="https://www.k-xzy.xyz/assets/js/anime.min.js"></script>
+  <script type="text/javascript" src="https://www.k-xzy.xyz/assets/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":100,"height":200},"mobile":{"show":false},"log":false});</script></body>
+</html>
